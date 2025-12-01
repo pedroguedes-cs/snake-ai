@@ -1,6 +1,6 @@
 #pragma once
 
-enum GameStates 
+enum GameState 
 {
     INIT,
     RUN,
