@@ -2,9 +2,7 @@
 
 enum Algorithm 
 {
-    DFS,
     BFS,
-    A_STAR,
-    GBFS,
+    DFS,
     RANDOM
 };
