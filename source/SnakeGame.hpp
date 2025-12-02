@@ -23,7 +23,7 @@ class SnakeGame
     GameState currentState;
 
     public:
-        SnakeGame();
+        SnakeGame(GameConfig config);
         ~SnakeGame();
 
         bool loadGame(std::string filePath);
