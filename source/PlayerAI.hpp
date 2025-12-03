@@ -14,7 +14,6 @@ class PlayerAI
         std::vector<Direction> directions;
 
     public:
-        PlayerAI();
         virtual ~PlayerAI() = default;
 
         void clearDirections();

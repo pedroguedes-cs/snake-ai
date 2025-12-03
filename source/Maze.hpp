@@ -7,15 +7,12 @@
 
 class Maze
 {
-    std::vector<std::vector<int>> board;
+    std::vector<std::vector<char>> board;
     Position foodPosition;
     Position beginPosition;
-    int rowsCount;
-    int columnsCount;
 
     public:
         Maze(const std::vector<std::string>& lines);
-        ~Maze();
         
         void setFoodPosition(Position position);
         std::vector<Position> getEmptyPositions();

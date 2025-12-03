@@ -14,17 +14,17 @@
 class SnakeGame 
 {
     std::vector<Maze> mazes;
-    Snake snake;
+    GameState currentState;
     std::unique_ptr<PlayerAI> playerAIPtr;
+    Snake snake;
+
     int lives;
     int foods;
-    int score;
     int fps;
-    GameState currentState;
+    int score;
 
     public:
         SnakeGame(GameConfig config);
-        ~SnakeGame();
 
         bool loadGame(std::string filePath);
         void runGame();
