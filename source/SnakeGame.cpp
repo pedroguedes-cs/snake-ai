@@ -6,7 +6,25 @@
 
 SnakeGame::SnakeGame(GameConfig config)
 {
+    currentState = GameState::INIT;
 
+    if (config.algorithm == BFS)
+    {
+        playerAIPtr = std::make_unique<BFSPlayerAI>();
+    }
+    else if (config.algorithm == DFS)
+    {
+        playerAIPtr = std::make_unique<DFSPlayerAI>();
+    }
+    else
+    {
+        playerAIPtr = std::make_unique<RandomPlayerAI>();
+    }
+
+    lives = config.lives;
+    foods = config.foods;
+    fps = config.fps;
+    score = 0;
 }
 
 bool SnakeGame::loadGame(std::string filePath)
@@ -88,21 +106,20 @@ bool SnakeGame::loadGame(std::string filePath)
             }
         }
 
+        int beginFlagCount = 0;
         for (auto l : lines)
         {
             for (auto c : l)
             {
                 if (c == '&')
                 {
-                    validBegin = true;
-                    break;
+                    beginFlagCount++;
                 }
             }
-
-            if (validBegin)
-            {
-                break;
-            }
+        }
+        if (beginFlagCount == 1)
+        {
+            validBegin = true;
         }
 
         if (validBegin && validRowsCount && validColumnsCount && validChars)

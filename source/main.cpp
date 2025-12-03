@@ -2,6 +2,7 @@
 
 #include "ArgumentParser.hpp"
 #include "GameConfig.hpp"
+#include "SnakeGame.hpp"
 
 
 int main(int argc, char* argv[])
@@ -15,7 +16,7 @@ int main(int argc, char* argv[])
 
     GameConfig validatedConfig = *config;
 
-    std::cout << "\n\nSUCCESS\n\n";
+    std::cout << "\n\nCLI: success\n\n";
 
     std::cout << "Foods: "<< validatedConfig.foods << "\n\n";
     std::cout << "Lives: "<< validatedConfig.lives << "\n\n";
@@ -25,7 +26,21 @@ int main(int argc, char* argv[])
   }
   else 
   {
-    std::cout << "\n\nFAIL\n\n";
+    std::cout << "\n\nCLI: fail\n\n";
+    return 1;
+  }
+
+  GameConfig validatedConfig = *config;
+
+  SnakeGame game(validatedConfig);
+
+  if (game.loadGame(validatedConfig.filePath))
+  {
+    std::cout << "\nLoad: success\n";
+  }
+  else 
+  {
+    std::cout << "\nLoad: fail\n";
   }
 
   return 0;

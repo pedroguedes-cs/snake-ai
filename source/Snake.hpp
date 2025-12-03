@@ -10,9 +10,6 @@ class Snake
     std::vector<Position> body;
 
     public:
-        Snake();
-        ~Snake();
-
         bool isSnake(Position position);
         bool isSnakeHead(Position position);
 };
