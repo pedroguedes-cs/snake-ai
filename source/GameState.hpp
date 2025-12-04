@@ -3,10 +3,10 @@
 enum GameState 
 {
     INIT,
-    RUN,
+    PLAY,
     EAT,
     HIT,
-    LEVEL_DONE,
+    LOAD_MAZE,
     WIN,
     LOSE
 };

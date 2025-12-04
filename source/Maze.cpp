@@ -21,4 +21,21 @@ Maze::Maze(const std::vector<std::string>& lines)
 
         this->board.push_back(row);
     }
+
+    eatenFoods = 0;
+}
+
+Position Maze::getBeginPosition()
+{
+    return this->beginPosition;
+}
+
+size_t Maze::getRows()
+{
+    return this->board.size();
+}
+
+size_t Maze::getColumns()
+{
+    return this->board[0].size();
 }

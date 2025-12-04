@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "Position.hpp"
+#include "Direction.hpp"
 
 
 class Snake
@@ -12,4 +13,6 @@ class Snake
     public:
         bool isSnake(Position position);
         bool isSnakeHead(Position position);
+
+        void move(Direction direction);
 };
