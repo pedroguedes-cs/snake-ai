@@ -14,28 +14,39 @@ Maze::Maze(const std::vector<std::string>& lines)
 
             if (value == '&')
             {
-                this->beginPosition.row = i;
-                this->beginPosition.column = j;
+                beginPosition.row = i;
+                beginPosition.column = j;
             }
         }
 
-        this->board.push_back(row);
+        board.push_back(row);
     }
 
     eatenFoods = 0;
+    completed = false;
 }
 
 Position Maze::getBeginPosition()
 {
-    return this->beginPosition;
+    return beginPosition;
 }
 
 size_t Maze::getRows()
 {
-    return this->board.size();
+    return board.size();
 }
 
 size_t Maze::getColumns()
 {
-    return this->board[0].size();
+    return board[0].size();
+}
+
+bool Maze::isCompleted()
+{
+    return completed;
+}
+
+bool Maze::markAsCompleted()
+{
+    completed = true;
 }
