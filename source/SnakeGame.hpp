@@ -18,6 +18,7 @@ class SnakeGame
     std::unique_ptr<PlayerAI> playerAIPtr;
     Snake snake;
 
+    Algorithm algorithm;
     int lives;
     int foods;
     int fps;
@@ -28,23 +29,25 @@ class SnakeGame
     public:
         SnakeGame(GameConfig config);
 
+        void printInfo();
+        void printMazesInfo();
+
         bool loadGame(std::string filePath);
         void runGame();
 
         void changeState(GameState gameState);
 
-        void enterState();
-        void enterPlayState();
+        void processEvents();  // Game loop 1
 
-        void updateState();
+        void updateState(); // Game loop 2
         void updatePlayState();
 
-        void renderState();
+        void renderState(); // Game loop 3
         void renderInitState();
         void renderPlayState();
         void renderEatState();
         void renderHitState();
-        void renderLevelDoneState();
+        void renderLoadMazeState();
         void renderWinState();
         void renderLoseState();
 };

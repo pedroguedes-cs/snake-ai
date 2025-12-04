@@ -6,7 +6,7 @@ enum GameState
     PLAY,
     EAT,
     HIT,
-    LEVEL_DONE,
+    LOAD_MAZE,
     WIN,
     LOSE
 };

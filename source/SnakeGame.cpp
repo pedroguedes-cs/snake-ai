@@ -6,38 +6,63 @@
 
 SnakeGame::SnakeGame(GameConfig config)
 {
-    currentState = GameState::INIT;
+    this->currentState = GameState::INIT;
 
     if (config.algorithm == BFS)
     {
-        playerAIPtr = std::make_unique<BFSPlayerAI>();
+        this->playerAIPtr = std::make_unique<BFSPlayerAI>();
     }
     else if (config.algorithm == DFS)
     {
-        playerAIPtr = std::make_unique<DFSPlayerAI>();
+        this->playerAIPtr = std::make_unique<DFSPlayerAI>();
     }
     else
     {
-        playerAIPtr = std::make_unique<RandomPlayerAI>();
+        this->playerAIPtr = std::make_unique<RandomPlayerAI>();
     }
 
-    lives = config.lives;
-    foods = config.foods;
-    fps = config.fps;
-    score = 0;
+    this->algorithm = config.algorithm;
+    this->lives = config.lives;
+    this->foods = config.foods;
+    this->fps = config.fps;
+    this->score = 0;
 
-    isRunning = true;
+    this->isRunning = true;
+}
+
+void SnakeGame::printInfo()
+{
+    std::cout << "\n=====[GAME INFO]\n";
+
+    std::cout << "\nAlgorithm: " << this->algorithm;
+    std::cout << "\nLives: " << this->lives;
+    std::cout << "\nFoods: " << this->foods;
+    std::cout << "\nFPS: " << this->fps;
+    std::cout << "\nScore: " << this->score;
+    std::cout << "\n\nMazes loaded: " << this->mazes.size() << "\n";
+}
+
+void SnakeGame::printMazesInfo()
+{
+    std::cout << "\n\n=====[MAZES INFO]";
+
+    for (size_t i = 0; i < this->mazes.size(); i++)
+    {
+        std::cout << "\n\nMaze " << i << ":";
+        std::cout << "\nRows = " << this->mazes[i].getRows();
+        std::cout << "\nColumns = " << this->mazes[i].getColumns();
+        std::cout << "\nBegin = (" << this->mazes[i].getBeginPosition().row << ", " << this->mazes[i].getBeginPosition().column << ")\n";
+    }
 }
 
 bool SnakeGame::loadGame(std::string filePath)
 {
-    std::cout << "\n\nLoad game. file = " << filePath << "\n\n";
+    std::cout << "\n=====[Loading = '" << filePath << "']\n";
     std::ifstream File(filePath);
 
     /* Invalid file path */
     if (!File.is_open())
     {
-        std::cout << "Couldn't open: " << filePath << "\n\n";
         return false;
     }
 
@@ -137,7 +162,6 @@ bool SnakeGame::loadGame(std::string filePath)
         return false;
     }
 
-    std::cout << "\nLoad status: success. Valid Mazes = " << this->mazes.size() << "\n\n";
     return true;
 }
 
@@ -145,6 +169,7 @@ void SnakeGame::runGame()
 {
     while (isRunning)
     {
+        this->processEvents();
         this->updateState();
         this->renderState();
     }
@@ -153,20 +178,15 @@ void SnakeGame::runGame()
 void SnakeGame::changeState(GameState gameState)
 {
     this->currentState = gameState;
-    this->enterState();
 }
 
-void SnakeGame::enterState()
+void processEvents()
 {
-    if (this->currentState == GameState::PLAY)
-    {
-        this->enterPlayState();
-    }
-}
-
-void SnakeGame::enterPlayState()
-{
-
+    // cin.get()
+    // Check positions
+    // Check lives
+    // Check eaten foods
+    // Check remaining mazes
 }
 
 void SnakeGame::updateState()
@@ -179,7 +199,7 @@ void SnakeGame::updateState()
 
 void SnakeGame::updatePlayState()
 {
-    
+    // Pick next move + snake.move()
 }
 
 void SnakeGame::renderState()
@@ -198,8 +218,8 @@ void SnakeGame::renderState()
         case GameState::HIT:
             this->renderHitState();
             break;
-        case GameState::LEVEL_DONE:
-            this->renderLevelDoneState();
+        case GameState::LOAD_MAZE:
+            this->renderLoadMazeState();
             break;
         case GameState::WIN:
             this->renderWinState();
@@ -214,35 +234,35 @@ void SnakeGame::renderState()
 
 void SnakeGame::renderInitState()
 {
-
+    // Info
 }
 
 void SnakeGame::renderPlayState()
 {
-
+    // Fps delay + Show next move
 }
 
 void SnakeGame::renderEatState()
 {
-
+    // Show message
 }
 
 void SnakeGame::renderHitState()
 {
-
+    // Show message
 }
 
-void SnakeGame::renderLevelDoneState()
+void SnakeGame::renderLoadMazeState()
 {
-
+    // Show message
 }
 
 void SnakeGame::renderWinState()
 {
-
+    // Show message
 }
 
 void SnakeGame::renderLoseState()
 {
-
+    // Show message
 }

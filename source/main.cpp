@@ -7,41 +7,41 @@
 
 int main(int argc, char* argv[])
 {
+  // CLI
   ArgumentParser parser;
-
   std::optional<GameConfig> config = parser.parseArguments(argc, argv);
+  bool cliSuccess = config.has_value();
 
-  if (config.has_value())
+  if (!cliSuccess)
   {
-
-    GameConfig validatedConfig = *config;
-
-    std::cout << "\n\nCLI: success\n\n";
-
-    std::cout << "Foods: "<< validatedConfig.foods << "\n\n";
-    std::cout << "Lives: "<< validatedConfig.lives << "\n\n";
-    std::cout << "FPS: "<< validatedConfig.fps << "\n\n";
-    std::cout << "Algorithm: "<< validatedConfig.algorithm << "\n\n";
-    std::cout << "File path: "<< validatedConfig.filePath << "\n\n";
-  }
-  else 
-  {
-    std::cout << "\n\nCLI: fail\n\n";
+    std::cout << "\n\n=====[CLI: fail]\n\n";
     return 1;
   }
 
+  std::cout << "\n=====[CLI: success]\n";
+
+
+  // LOAD
   GameConfig validatedConfig = *config;
-
   SnakeGame game(validatedConfig);
+  bool loadSuccess = game.loadGame(validatedConfig.filePath);
 
-  if (game.loadGame(validatedConfig.filePath))
+  if (loadSuccess)
   {
-    std::cout << "\nLoad: success\n";
+    std::cout << "\n=====[LOAD: success]\n";
+    game.printInfo();
+    game.printMazesInfo();
   }
   else 
   {
-    std::cout << "\nLoad: fail\n";
+    std::cout << "\n=====[LOAD: fail]\n\n";
+    return 1;
   }
+
+
+  // RUN
+  std::cin.get();
+  std::cout << "\n=====[RUN GAME]\n";
 
   return 0;
 }

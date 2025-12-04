@@ -11,8 +11,14 @@ class Maze
     Position foodPosition;
     Position beginPosition;
 
+    int eatenFoods;
+
     public:
         Maze(const std::vector<std::string>& lines);
+
+        Position getBeginPosition();
+        size_t getRows();
+        size_t getColumns();
         
         void setFoodPosition(Position position);
         std::vector<Position> getEmptyPositions();
