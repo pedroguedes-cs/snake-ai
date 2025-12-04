@@ -35,7 +35,7 @@ std::optional<GameConfig> ArgumentParser::parseArguments(int argc, char* argv[])
         {
             if (isLastArgument)
             {
-                this->printHelpMessage("Missing arguments");
+                printHelpMessage("Missing arguments");
                 return std::nullopt;
             }
 
@@ -48,7 +48,7 @@ std::optional<GameConfig> ArgumentParser::parseArguments(int argc, char* argv[])
 
                 if (!isValidType)
                 {
-                    this->printHelpMessage("Invalid playertype");
+                    printHelpMessage("Invalid playertype");
                     return std::nullopt;
                 }
 
@@ -80,22 +80,22 @@ std::optional<GameConfig> ArgumentParser::parseArguments(int argc, char* argv[])
                 }
                 catch (const std::invalid_argument& e)
                 {
-                    this->printHelpMessage("Invalid value");
+                    printHelpMessage("Invalid value");
                     return std::nullopt;
                 }
                 catch (const std::out_of_range& e)
                 {
-                    this->printHelpMessage("Value out of range");
+                    printHelpMessage("Value out of range");
                     return std::nullopt;
                 }
                 if (pos != nextArgument.size())
                 {
-                    this->printHelpMessage("Invalid value");
+                    printHelpMessage("Invalid value");
                     return std::nullopt;
                 }
                 if (nextArgumentInt <= 0)
                 {
-                    this->printHelpMessage("Invalid value");
+                    printHelpMessage("Invalid value");
                     return std::nullopt;
                 }
 
@@ -122,7 +122,7 @@ std::optional<GameConfig> ArgumentParser::parseArguments(int argc, char* argv[])
             }
             else 
             {
-                this->printHelpMessage("Invalid argument");
+                printHelpMessage("Invalid argument");
                 return std::nullopt;
             }
         }
@@ -130,7 +130,7 @@ std::optional<GameConfig> ArgumentParser::parseArguments(int argc, char* argv[])
 
     if (config.filePath.empty())
     {
-        this->printHelpMessage("Missing file path");
+        printHelpMessage("Missing file path");
         return std::nullopt;
     }
 

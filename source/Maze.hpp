@@ -12,6 +12,7 @@ class Maze
     Position beginPosition;
 
     int eatenFoods;
+    bool completed;
 
     public:
         Maze(const std::vector<std::string>& lines);
@@ -19,6 +20,9 @@ class Maze
         Position getBeginPosition();
         size_t getRows();
         size_t getColumns();
+
+        bool isCompleted();
+        bool markAsCompleted();
         
         void setFoodPosition(Position position);
         std::vector<Position> getEmptyPositions();
