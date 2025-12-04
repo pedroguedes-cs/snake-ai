@@ -180,26 +180,110 @@ void SnakeGame::changeState(GameState gameState)
     this->currentState = gameState;
 }
 
-void processEvents()
+void SnakeGame::processEvents()
 {
-    // cin.get()
-    // Check positions
-    // Check lives
-    // Check eaten foods
-    // Check remaining mazes
+    switch (this->currentState)
+    {
+        case GameState::START:
+            std::cin.get();
+            changeState(GameState::INIT);
+            break;
+        case GameState::INIT:
+            std::cin.get();
+            changeState(GameState::LOAD_MAZE);
+            break;
+        case GameState::LOAD_MAZE:
+            std::cin.get();
+            changeState(GameState::PLAY);
+            break;
+        case GameState::PLAY:
+            if (this->snakeEat())
+            {
+                changeState(GameState::EAT);
+            }
+            else if (this->snakeHit())
+            {
+                changeState(GameState::HIT);
+            }
+            break;
+        case GameState::EAT:
+            std::cin.get();
+            if (this->mazeCompleted())
+            {
+                this->changeState(GameState::MAZE_COMPLETED);
+            }
+            else 
+            {
+                this->changeState(GameState::LOAD_MAZE);
+            }
+            break;
+        case GameState::HIT:
+            std::cin.get();
+            if (this->snakeLose())
+            {
+                changeState(GameState::LOSE);
+            }
+            else
+            {
+                this->changeState(GameState::LOAD_MAZE);
+            }
+            break;
+        case GameState::MAZE_COMPLETED:
+            std::cin.get();
+
+            this->mazes.erase(this->mazes.begin());
+
+            if (this->snakeWin())
+            {
+                this->changeState(GameState::WIN);
+            }
+            else
+            {
+                this->changeState(GameState::LOAD_MAZE);
+            }
+            break;
+        case GameState::WIN:
+            std::cin.get();
+            this->isRunning = false;
+            changeState(GameState::END);
+            break;
+        case GameState::LOSE:
+            std::cin.get();
+            this->isRunning = false;
+            changeState(GameState::END);
+            break;
+        default:
+            break;
+    }
 }
 
 void SnakeGame::updateState()
 {
-    if (this->currentState == GameState::PLAY)
+    switch (this->currentState)
     {
-        this->updatePlayState();
+        case GameState::LOAD_MAZE:
+            this->updateLoadMazeState();
+            break;
+        case GameState::PLAY:
+            this->updatePlayState();
+            break;
+        default:
+            break;    
     }
 }
 
 void SnakeGame::updatePlayState()
 {
-    // Pick next move + snake.move()
+    // Pick next move
+    // Snake.move()
+}
+
+void SnakeGame::updateLoadMazeState()
+{
+    // Pop front
+    // Place snake
+    // Place food
+    // Find solution
 }
 
 void SnakeGame::renderState()
