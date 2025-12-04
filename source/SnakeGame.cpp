@@ -25,6 +25,8 @@ SnakeGame::SnakeGame(GameConfig config)
     foods = config.foods;
     fps = config.fps;
     score = 0;
+
+    isRunning = true;
 }
 
 bool SnakeGame::loadGame(std::string filePath)
@@ -137,4 +139,110 @@ bool SnakeGame::loadGame(std::string filePath)
 
     std::cout << "\nLoad status: success. Valid Mazes = " << this->mazes.size() << "\n\n";
     return true;
+}
+
+void SnakeGame::runGame()
+{
+    while (isRunning)
+    {
+        this->updateState();
+        this->renderState();
+    }
+}
+
+void SnakeGame::changeState(GameState gameState)
+{
+    this->currentState = gameState;
+    this->enterState();
+}
+
+void SnakeGame::enterState()
+{
+    if (this->currentState == GameState::PLAY)
+    {
+        this->enterPlayState();
+    }
+}
+
+void SnakeGame::enterPlayState()
+{
+
+}
+
+void SnakeGame::updateState()
+{
+    if (this->currentState == GameState::PLAY)
+    {
+        this->updatePlayState();
+    }
+}
+
+void SnakeGame::updatePlayState()
+{
+    
+}
+
+void SnakeGame::renderState()
+{
+    switch (this->currentState)
+    {
+        case GameState::INIT:
+            this->renderInitState();
+            break;
+        case GameState::PLAY:
+            this->renderPlayState();
+            break;
+        case GameState::EAT:
+            this->renderEatState();
+            break;
+        case GameState::HIT:
+            this->renderHitState();
+            break;
+        case GameState::LEVEL_DONE:
+            this->renderLevelDoneState();
+            break;
+        case GameState::WIN:
+            this->renderWinState();
+            break;
+        case GameState::LOSE:
+            this->renderLoseState();
+            break;
+        default:
+            break;
+    }
+}
+
+void SnakeGame::renderInitState()
+{
+
+}
+
+void SnakeGame::renderPlayState()
+{
+
+}
+
+void SnakeGame::renderEatState()
+{
+
+}
+
+void SnakeGame::renderHitState()
+{
+
+}
+
+void SnakeGame::renderLevelDoneState()
+{
+
+}
+
+void SnakeGame::renderWinState()
+{
+
+}
+
+void SnakeGame::renderLoseState()
+{
+
 }

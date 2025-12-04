@@ -23,9 +23,28 @@ class SnakeGame
     int fps;
     int score;
 
+    bool isRunning;
+
     public:
         SnakeGame(GameConfig config);
 
         bool loadGame(std::string filePath);
         void runGame();
+
+        void changeState(GameState gameState);
+
+        void enterState();
+        void enterPlayState();
+
+        void updateState();
+        void updatePlayState();
+
+        void renderState();
+        void renderInitState();
+        void renderPlayState();
+        void renderEatState();
+        void renderHitState();
+        void renderLevelDoneState();
+        void renderWinState();
+        void renderLoseState();
 };
