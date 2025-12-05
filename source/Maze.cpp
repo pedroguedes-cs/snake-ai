@@ -41,6 +41,11 @@ size_t Maze::getColumns()
     return board[0].size();
 }
 
+int Maze::getEatenFood()
+{
+    return eatenFoods;
+}
+
 bool Maze::isCompleted()
 {
     return completed;

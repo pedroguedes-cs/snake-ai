@@ -20,6 +20,7 @@ class Maze
         Position getBeginPosition();
         size_t getRows();
         size_t getColumns();
+        int getEatenFood();
 
         bool isCompleted();
         bool markAsCompleted();

@@ -404,3 +404,30 @@ void SnakeGame::renderLoseState()
     printMessage("TRY AGAIN AI!");
     printInputMessage();
 }
+
+
+//=====[CHECK EVENTS]=====
+bool SnakeGame::snakeEat()
+{
+    return (mazes[currentMazeIndex].isFood(snake.getHeadPosition()));
+}
+
+bool SnakeGame::snakeHit()
+{
+    return (mazes[currentMazeIndex].isWall(snake.getHeadPosition()) || snake.isSnakeBody(snake.getHeadPosition()));
+}
+
+bool SnakeGame::mazeCompleted()
+{
+    return (mazes[currentMazeIndex].getEatenFood() == foods);
+}
+
+bool SnakeGame::snakeLose()
+{
+    return (lives == 0);
+}
+
+bool SnakeGame::snakeWin()
+{
+    return (mazes.size() == 0);
+}
