@@ -11,8 +11,11 @@ class Snake
     std::vector<Position> body;
 
     public:
+        Position getHeadPosition();
+
         bool isSnake(Position position);
         bool isSnakeHead(Position position);
+        bool isSnakeBody(Position position);
 
         void move(Direction direction);
 };

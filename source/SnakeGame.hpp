@@ -35,6 +35,7 @@ class SnakeGame
         void printMazesInfo();
 
         bool loadGame(std::string filePath);
+        
         void runGame();
 
         void changeState(GameState gameState);
@@ -55,4 +56,10 @@ class SnakeGame
         void renderMazeCompletedState();
         void renderWinState();
         void renderLoseState();
+
+        bool snakeEat();
+        bool snakeHit();
+        bool mazeCompleted();
+        bool snakeLose();
+        bool snakeWin();
 };
