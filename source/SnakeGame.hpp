@@ -45,6 +45,7 @@ class SnakeGame
 
         void updateState(); // Game loop 2
         void updateLoadMazeState();
+        void updateEatState();
         void updateMazeCompletedState();
         void updatePlayState();
 
@@ -72,4 +73,6 @@ class SnakeGame
         void printSnakeHead();
         void printSnakeBody();
         void printBlank();
+        void printFind();
+        void printHit();
 };

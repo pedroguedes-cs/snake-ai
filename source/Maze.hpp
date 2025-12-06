@@ -17,20 +17,21 @@ class Maze
     public:
         Maze(const std::vector<std::string>& lines);
 
-        Position getBeginPosition();
-        size_t getRows();
-        size_t getColumns();
-        int getEatenFood();
+        Position getBeginPosition() const;
+        Position getFoodPosition() const;
+        size_t getRows() const;
+        size_t getColumns() const;
+        int getEatenFood() const;
 
-        bool isCompleted();
+        bool isCompleted() const;
         bool markAsCompleted();
         
         void setFoodPosition(Position position);
 
-        bool isFood(Position position);
-        bool isWall(Position position);
-        bool isInvisibleWall(Position position);
-        bool isBlank(Position position);
+        bool isFood(Position position) const;
+        bool isWall(Position position) const;
+        bool isInvisibleWall(Position position) const;
+        bool isBlank(Position position) const;
 
-        bool validPosition(Position position);
+        bool validPosition(Position position) const;
 };

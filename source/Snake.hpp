@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>
+#include <deque>
 
 #include "Position.hpp"
 #include "Direction.hpp"
@@ -8,17 +8,21 @@
 
 class Snake
 {
-    std::vector<Position> body;
+    std::deque<Position> body;
+    Position lastTail;
 
     public:
         Position getHeadPosition();
+        std::deque<Position> getBody() const;
 
         bool isSnake(Position position);
         bool isSnakeHead(Position position);
         bool isSnakeBody(Position position);
 
         void move(Direction direction);
+        void grow();
 
+        void reset(Position position);
         void removeBody();
         void resetPosition(Position position);
 };
