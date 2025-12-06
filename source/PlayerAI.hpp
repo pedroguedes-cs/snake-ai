@@ -16,7 +16,7 @@ class PlayerAI
     public:
         virtual ~PlayerAI() = default;
 
-        void clearDirections();
+        void clearPath();
         virtual bool findSolution(const Maze& maze, const Snake& snake);
         Direction nextMove();
 };

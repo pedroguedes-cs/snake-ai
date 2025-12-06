@@ -7,7 +7,7 @@
 #include "Node.hpp"
 
 
-void PlayerAI::clearDirections()
+void PlayerAI::clearPath()
 {
     path.clear();
 }
