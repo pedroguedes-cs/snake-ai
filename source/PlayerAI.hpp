@@ -1,6 +1,6 @@
 #pragma once 
 
-#include <vector>
+#include <deque>
 
 #include "Algorithm.hpp"
 #include "Direction.hpp"
@@ -11,7 +11,7 @@
 class PlayerAI
 {
     protected:
-        std::vector<Direction> directions;
+        std::deque<Direction> path;
 
     public:
         virtual ~PlayerAI() = default;
@@ -38,3 +38,8 @@ class RandomPlayerAI : public PlayerAI
     public:
         bool findSolution(const Maze& maze, const Snake& snake) override;
 };
+
+//=====[PLAYER AI UTILS]=====
+std::deque<Position> simulateMove(std::deque<Position> snakeProjection, Direction direction);
+bool isValidInMaze(Position position, const Maze& maze);
+bool hitItself(std::deque<Position> snakeProjection);

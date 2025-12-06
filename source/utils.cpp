@@ -14,6 +14,13 @@ void printTitle(std::string title)
     std::cout << "\n\n\n";
 }
 
+void printSubtitle(std::string subtitle)
+{
+    std::cout << "\n";
+    printLine(5, '=');
+    std::cout << "[" << subtitle << "]\n";
+}
+
 void printMessage(std::string message)
 {
     std::cout << "\n" << message << "\n";
