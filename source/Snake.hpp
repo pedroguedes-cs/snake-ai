@@ -18,4 +18,7 @@ class Snake
         bool isSnakeBody(Position position);
 
         void move(Direction direction);
+
+        void removeBody();
+        void resetPosition(Position position);
 };

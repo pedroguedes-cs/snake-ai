@@ -10,13 +10,13 @@ Maze::Maze(const std::vector<std::string>& lines)
         {
             char value = lines[i][j];
 
-            row.push_back(value);
-
             if (value == '&')
             {
                 beginPosition.row = i;
                 beginPosition.column = j;
             }
+
+            row.push_back(value);
         }
 
         board.push_back(row);
@@ -54,4 +54,52 @@ bool Maze::isCompleted()
 bool Maze::markAsCompleted()
 {
     completed = true;
+}
+
+bool Maze::isFood(Position position)
+{
+    if (!validPosition(position))
+    {
+        return false;
+    }
+
+    return (position.row == foodPosition.row && position.column == foodPosition.column);
+}
+bool Maze::isWall(Position position)
+{
+    if (!validPosition(position))
+    {
+        return false;
+    }
+
+    return (board[position.row][position.column] == '#');
+}
+
+bool Maze::isInvisibleWall(Position position)
+{
+    if (!validPosition(position))
+    {
+        return false;
+    }
+
+    return (board[position.row][position.column] == '.');
+}
+
+bool Maze::isBlank(Position position)
+{
+    if (!validPosition(position))
+    {
+        return false;
+    }
+
+    return (board[position.row][position.column] == ' ' || board[position.row][position.column] == '&');
+}
+
+
+bool Maze::validPosition(Position position)
+{
+    bool validRow = position.row >= 0 && position.row < getRows();
+    bool validColumn = position.column >= 0 && position.column < getColumns();
+
+    return (validRow && validColumn);
 }

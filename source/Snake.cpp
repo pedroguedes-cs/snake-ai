@@ -74,3 +74,20 @@ void Snake::move(Direction direction)
             break;
     }
 }
+
+void Snake::removeBody()
+{
+    while(body.size() > 1)
+    {
+        body.pop_back();
+    }
+}
+
+void Snake::resetPosition(Position position)
+{
+    if (!body.empty())
+    {
+        body[0].row = position.row;
+        body[0].column = position.column;
+    }
+}
