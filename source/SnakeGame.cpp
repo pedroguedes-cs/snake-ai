@@ -1,9 +1,17 @@
 #include <iostream>
 #include <fstream>
 #include <limits>
+#include <algorithm>
+#include <set>
+#include <queue>
+#include <deque>
 #include <string>
 
 #include "SnakeGame.hpp"
+#include "Position.hpp"
+#include "Direction.hpp"
+#include "Node.hpp"
+#include "algorithmUtils.hpp"
 #include "utils.hpp"
 
 SnakeGame::SnakeGame(GameConfig config)
@@ -377,6 +385,7 @@ void SnakeGame::updateState()
 void SnakeGame::updateLoadMazeState()
 {
     placeFood();
+    playerAIPtr->clearPath();
     playerAIPtr->findSolution(mazes[currentMazeIndex], snake);
 }
 
@@ -507,7 +516,41 @@ void SnakeGame::renderLoseState()
 //=====[OPERATIONS]=====
 void SnakeGame::placeFood()
 {
-    // BFS from current position (last element) || no positions = place on snake head
+    std::set<Position> visited;
+    std::queue<Position> positionsToCheck;
+    std::vector<Position> allPositions;
+    std::vector<Direction> directions = {UP, DOWN, LEFT, RIGHT};
+
+    Position currentPosition = snake.getHeadPosition();
+    positionsToCheck.push(currentPosition);
+    allPositions.push_back(currentPosition);
+    
+    visited.insert(currentPosition);
+
+    while (!positionsToCheck.empty())
+    {
+        currentPosition = positionsToCheck.front();
+        positionsToCheck.pop();
+
+        for (auto d : directions)
+        {
+            Position neighbor = simulateNeighbor(currentPosition, d);
+
+            bool validInMaze = isValidInMaze(neighbor, mazes[currentMazeIndex]);
+            bool isSnake = snake.isSnake(neighbor);
+            bool wasVisited = (visited.find(neighbor) != visited.end());
+
+            if (validInMaze && !isSnake && !wasVisited)
+            {
+                visited.insert(neighbor);
+                allPositions.push_back(neighbor);
+                positionsToCheck.push(neighbor);
+            }
+        }
+    }
+
+    Position foodPosition = allPositions.back();
+    mazes[currentMazeIndex].setFoodPosition(foodPosition);
 }
 
 
