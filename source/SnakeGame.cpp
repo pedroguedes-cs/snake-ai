@@ -59,6 +59,44 @@ void SnakeGame::printMazesInfo()
     }
 }
 
+void SnakeGame::printMaze()
+{
+    for (size_t r = 0; r < mazes[currentMazeIndex].getRows(); r++)
+    {
+        for (size_t c = 0; c < mazes[currentMazeIndex].getColumns(); c++)
+        {
+            Position currentPosition = {(int)r, (int)c};
+
+            if (mazes[currentMazeIndex].isWall(currentPosition))
+            {
+                printWall();
+            }
+            else if (mazes[currentMazeIndex].isInvisibleWall(currentPosition))
+            {
+                printInvisibleWall();
+            }
+            else if (mazes[currentMazeIndex].isFood(currentPosition))
+            {
+                printFood();
+            }
+            else if (snake.isSnakeHead(currentPosition))
+            {
+                printSnakeHead();
+            }
+            else if (snake.isSnakeBody(currentPosition))
+            {
+                printSnakeBody();
+            }
+            else if (mazes[currentMazeIndex].isBlank(currentPosition))
+            {
+                printBlank();
+            }
+        }
+
+        std::cout << "\n";
+    }
+}
+
 
 //=====[LOAD GAME]=====
 bool SnakeGame::loadGame(std::string filePath)
@@ -228,6 +266,10 @@ void SnakeGame::processEvents()
             break;
         case GameState::HIT:
             std::cin.get();
+
+            snake.removeBody();
+            snake.resetPosition(mazes[currentMazeIndex].getBeginPosition());
+
             if (snakeLose())
             {
                 changeState(GameState::LOSE);
@@ -239,9 +281,6 @@ void SnakeGame::processEvents()
             break;
         case GameState::MAZE_COMPLETED:
             std::cin.get();
-
-            mazes.erase(mazes.begin());
-
             if (snakeWin())
             {
                 changeState(GameState::WIN);
@@ -288,9 +327,8 @@ void SnakeGame::updateState()
 
 void SnakeGame::updateLoadMazeState()
 {
-    // Place snake
-    // Place food
-    // Find solution
+    placeFood();
+    playerAIPtr->findSolution(mazes[currentMazeIndex], snake);
 }
 
 void SnakeGame::updateMazeCompletedState()
@@ -301,8 +339,8 @@ void SnakeGame::updateMazeCompletedState()
 
 void SnakeGame::updatePlayState()
 {
-    // Pick next move
-    // Snake.move()
+    Direction nextDirection = playerAIPtr->nextMove();
+    snake.move(nextDirection);
 }
 
 
@@ -406,6 +444,13 @@ void SnakeGame::renderLoseState()
 }
 
 
+//=====[OPERATIONS]=====
+void placeFood()
+{
+    return;
+}
+
+
 //=====[CHECK EVENTS]=====
 bool SnakeGame::snakeEat()
 {
@@ -429,5 +474,37 @@ bool SnakeGame::snakeLose()
 
 bool SnakeGame::snakeWin()
 {
-    return (mazes.size() == 0);
+    return (currentMazeIndex == mazes.size());
+}
+
+
+//=====[PRINTERS]=====
+void SnakeGame::printWall()
+{
+    std::cout << '#';
+}
+
+void SnakeGame::printInvisibleWall()
+{
+    std::cout << '.';
+}
+
+void SnakeGame::printFood()
+{
+    std::cout << 'f';
+}
+
+void SnakeGame::printSnakeHead()
+{
+    std::cout << 'h';
+}
+
+void SnakeGame::printSnakeBody()
+{
+    std::cout << 'b';
+}
+
+void SnakeGame::printBlank()
+{
+    std::cout << ' ';
 }

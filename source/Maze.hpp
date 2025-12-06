@@ -26,7 +26,11 @@ class Maze
         bool markAsCompleted();
         
         void setFoodPosition(Position position);
-        std::vector<Position> getEmptyPositions();
+
         bool isFood(Position position);
         bool isWall(Position position);
+        bool isInvisibleWall(Position position);
+        bool isBlank(Position position);
+
+        bool validPosition(Position position);
 };
