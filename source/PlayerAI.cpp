@@ -1,3 +1,4 @@
+#include <iostream>
 #include <algorithm>
 #include <set>
 #include <queue>
@@ -13,6 +14,11 @@ void PlayerAI::clearPath()
     path.clear();
 }
 
+std::deque<Direction> PlayerAI::getPath()
+{
+    return path;
+}
+
 Direction PlayerAI::nextMove()
 {
     if (path.empty())
@@ -20,8 +26,10 @@ Direction PlayerAI::nextMove()
         return Direction::UP;
     }
 
-    return path[0];
+    Direction direction = path[0];
     path.pop_front();
+    
+    return direction;
 }
 
 bool PlayerAI::findSolution(const Maze& maze, const Snake& snake)
@@ -32,34 +40,34 @@ bool PlayerAI::findSolution(const Maze& maze, const Snake& snake)
 bool BFSPlayerAI::findSolution(const Maze& maze, const Snake& snake)
 {
     bool hasSolution = false;
-    Node* goal = nullptr;
+    size_t goal = 0;
 
     std::vector<Direction> directions = {UP, DOWN, LEFT, RIGHT};
     std::set<std::deque<Position>> visited;
     std::vector<Node> storage;
-    std::queue<Node*> candidates;
+    std::queue<size_t> candidates;
 
-    storage.push_back({Direction::NONE, snake.getBody(), nullptr});
-    candidates.push(&storage[0]);
+    storage.push_back({Direction::NONE, snake.getBody(), 0});
+    candidates.push(0);
     visited.insert(snake.getBody());
 
     while (!candidates.empty())
     {
-        Node* currentPtr = candidates.front();
+        size_t currentIndex = candidates.front();
         candidates.pop();
 
         // Found
-        if (maze.isFood(currentPtr->snakeProjection[0]))
+        if (maze.isFood(storage[currentIndex].snakeProjection[0]))
         {
             hasSolution = true;
-            goal = currentPtr;
+            goal = currentIndex;
             break;
         }
 
         // Add neighbors
         for (auto d : directions)
         {
-            std::deque<Position> snakeProjection = simulateMove(currentPtr->snakeProjection, d);
+            std::deque<Position> snakeProjection = simulateMove(storage[currentIndex].snakeProjection, d);
 
             bool validInMaze = isValidInMaze(snakeProjection[0], maze);
             bool hitSnake = hitItself(snakeProjection);
@@ -68,8 +76,8 @@ bool BFSPlayerAI::findSolution(const Maze& maze, const Snake& snake)
             if (validInMaze && !hitSnake && !wasVisited)
             {
                 visited.insert(snakeProjection);
-                storage.push_back(Node {d, snakeProjection, currentPtr});
-                candidates.push(&storage.back());
+                storage.push_back(Node {d, snakeProjection, currentIndex});
+                candidates.push(storage.size() - 1);
             }
         }
     }
@@ -77,13 +85,13 @@ bool BFSPlayerAI::findSolution(const Maze& maze, const Snake& snake)
     if (hasSolution)
     {
         // Rebuild path
-        Node* node = goal;
+        size_t nodeIndex = goal;
         std::deque<Direction> moves;
 
-        while (node->parent != nullptr)
+        while (storage[nodeIndex].move != NONE)
         {
-            moves.push_back(node->move);
-            node = node->parent;
+            moves.push_back(storage[nodeIndex].move);
+            nodeIndex = storage[nodeIndex].parent;
         }
 
         std::reverse(moves.begin(), moves.end());
@@ -97,34 +105,34 @@ bool BFSPlayerAI::findSolution(const Maze& maze, const Snake& snake)
 bool DFSPlayerAI::findSolution(const Maze& maze, const Snake& snake)
 {
     bool hasSolution = false;
-    Node* goal = nullptr;
+    size_t goal = 0;
 
     std::vector<Direction> directions = {UP, DOWN, LEFT, RIGHT};
     std::set<std::deque<Position>> visited;
     std::vector<Node> storage;
-    std::stack<Node*> candidates;
+    std::stack<size_t> candidates;
 
-    storage.push_back({Direction::NONE, snake.getBody(), nullptr});
-    candidates.push(&storage[0]);
+    storage.push_back({Direction::NONE, snake.getBody(), 0});
+    candidates.push(0);
     visited.insert(snake.getBody());
 
     while (!candidates.empty())
     {
-        Node* currentPtr = candidates.top();
+        size_t currentIndex = candidates.top();
         candidates.pop();
 
         // Found
-        if (maze.isFood(currentPtr->snakeProjection[0]))
+        if (maze.isFood(storage[currentIndex].snakeProjection[0]))
         {
             hasSolution = true;
-            goal = currentPtr;
+            goal = currentIndex;
             break;
         }
 
         // Add neighbors
         for (auto d : directions)
         {
-            std::deque<Position> snakeProjection = simulateMove(currentPtr->snakeProjection, d);
+            std::deque<Position> snakeProjection = simulateMove(storage[currentIndex].snakeProjection, d);
 
             bool validInMaze = isValidInMaze(snakeProjection[0], maze);
             bool hitSnake = hitItself(snakeProjection);
@@ -133,8 +141,8 @@ bool DFSPlayerAI::findSolution(const Maze& maze, const Snake& snake)
             if (validInMaze && !hitSnake && !wasVisited)
             {
                 visited.insert(snakeProjection);
-                storage.push_back(Node {d, snakeProjection, currentPtr});
-                candidates.push(&storage.back());
+                storage.push_back(Node {d, snakeProjection, currentIndex});
+                candidates.push(storage.size() - 1);
             }
         }
     }
@@ -142,13 +150,13 @@ bool DFSPlayerAI::findSolution(const Maze& maze, const Snake& snake)
     if (hasSolution)
     {
         // Rebuild path
-        Node* node = goal;
+        size_t nodeIndex = goal;
         std::deque<Direction> moves;
 
-        while (node->parent != nullptr)
+        while (storage[nodeIndex].move != NONE)
         {
-            moves.push_back(node->move);
-            node = node->parent;
+            moves.push_back(storage[nodeIndex].move);
+            nodeIndex = storage[nodeIndex].parent;
         }
 
         std::reverse(moves.begin(), moves.end());

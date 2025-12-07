@@ -1,4 +1,6 @@
 #include <iostream>
+#include <chrono>
+#include <thread>
 
 #include "utils.hpp"
 
@@ -39,4 +41,10 @@ void printLine(int size, char character)
     {
         std::cout << character;
     }
+}
+
+void sleepFPS(int fps)
+{
+    int milliseconds = 1000 / fps;
+    std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
 }

@@ -18,19 +18,19 @@ std::deque<Position> simulateMove(std::deque<Position> snakeProjection, Directio
     switch (direction)
     {
         case Direction::UP:
-            simulation.push_front({simulation[0].row--, simulation[0].column});
+            simulation.push_front({simulation[0].row - 1, simulation[0].column});
             simulation.pop_back();
             break;
         case Direction::DOWN:
-            simulation.push_front({simulation[0].row++, simulation[0].column});
+            simulation.push_front({simulation[0].row + 1, simulation[0].column});
             simulation.pop_back();
             break;
         case Direction::LEFT:
-            simulation.push_front({simulation[0].row, simulation[0].column--});
+            simulation.push_front({simulation[0].row, simulation[0].column - 1});
             simulation.pop_back();
             break;
         case Direction::RIGHT:
-            simulation.push_front({simulation[0].row, simulation[0].column++});
+            simulation.push_front({simulation[0].row, simulation[0].column + 1});
             simulation.pop_back();
             break;
         default:
@@ -91,7 +91,7 @@ bool hitItself(std::deque<Position> snakeProjection)
 
     for (size_t i = 1; i < snakeProjection.size(); i++)
     {
-        if (snakeProjection[i].row == head.row && snakeProjection[i].column == head.column)
+        if (head == snakeProjection[i])
         {
             hit = true;
             break;

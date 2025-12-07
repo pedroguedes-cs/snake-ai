@@ -9,5 +9,5 @@ struct Node
 {
     Direction move;
     std::deque<Position> snakeProjection;
-    Node* parent;
+    size_t parent;
 };

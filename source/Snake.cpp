@@ -60,19 +60,19 @@ void Snake::move(Direction direction)
     switch (direction)
     {
         case Direction::UP:
-            body.push_front({body[0].row--, body[0].column});
+            body.push_front({body[0].row - 1, body[0].column});
             body.pop_back();
             break;
         case Direction::DOWN:
-            body.push_front({body[0].row++, body[0].column});
+            body.push_front({body[0].row + 1, body[0].column});
             body.pop_back();
             break;
         case Direction::LEFT:
-            body.push_front({body[0].row, body[0].column--});
+            body.push_front({body[0].row, body[0].column - 1});
             body.pop_back();
             break;
         case Direction::RIGHT:
-            body.push_front({body[0].row, body[0].column++});
+            body.push_front({body[0].row, body[0].column + 1});
             body.pop_back();
             break;
         default:

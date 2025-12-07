@@ -56,9 +56,19 @@ bool Maze::isCompleted() const
     return completed;
 }
 
-bool Maze::markAsCompleted()
+void Maze::markAsCompleted()
 {
     completed = true;
+}
+
+void Maze::setFoodPosition(Position position)
+{
+    foodPosition = position;
+}
+
+void Maze::addEatenFood()
+{
+    eatenFoods++;
 }
 
 bool Maze::isFood(Position position) const
@@ -68,7 +78,7 @@ bool Maze::isFood(Position position) const
         return false;
     }
 
-    return (position.row == foodPosition.row && position.column == foodPosition.column);
+    return (foodPosition == position);
 }
 bool Maze::isWall(Position position) const
 {
