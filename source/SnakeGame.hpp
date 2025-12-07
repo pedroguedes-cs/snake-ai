@@ -44,10 +44,14 @@ class SnakeGame
         void processEvents();  // Game loop 1
 
         void updateState(); // Game loop 2
+        void updateInitState();
         void updateLoadMazeState();
-        void updateEatState();
-        void updateMazeCompletedState();
         void updatePlayState();
+        void updateEatState();
+        void updateHitState();
+        void updateMazeCompletedState();
+        void updateWinState();
+        void updateLoseState();
 
         void renderState(); // Game loop 3
         void renderInitState();

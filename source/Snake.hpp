@@ -8,8 +8,8 @@
 
 class Snake
 {
-    std::deque<Position> body;
-    Position lastTail;
+    std::deque<Position> body {{-1, -1}};
+    Position lastTail {-1, -1};
 
     public:
         Position getHeadPosition();

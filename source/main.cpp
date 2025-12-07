@@ -3,10 +3,13 @@
 #include "ArgumentParser.hpp"
 #include "GameConfig.hpp"
 #include "SnakeGame.hpp"
+#include "utils.hpp"
 
 
 int main(int argc, char* argv[])
 {
+  printTitle("SNAKE GAME - PEDRO GUEDES");
+
   // CLI
   ArgumentParser parser;
   std::optional<GameConfig> config = parser.parseArguments(argc, argv);
@@ -18,30 +21,24 @@ int main(int argc, char* argv[])
     return 1;
   }
 
-  std::cout << "\n=====[CLI: success]\n";
+  std::cout << "\n\n=====[CLI: success]\n\n";
 
 
-  // LOAD
+  // Load
   GameConfig validatedConfig = *config;
   SnakeGame game(validatedConfig);
   bool loadSuccess = game.loadGame(validatedConfig.filePath);
 
-  if (loadSuccess)
+  if (!loadSuccess)
   {
-    std::cout << "\n=====[LOAD: success]\n";
-    game.printInfo();
-    game.printMazesInfo();
-  }
-  else 
-  {
-    std::cout << "\n=====[LOAD: fail]\n\n";
+    std::cout << "\n\n=====[LOAD: fail]\n\n";
     return 1;
   }
 
+  std::cout << "\n\n=====[LOAD: success]\n\n";
 
-  // RUN
-  std::cin.get();
-  std::cout << "\n=====[RUN GAME]\n";
+  // Run game
+  game.runGame();
 
   return 0;
 }

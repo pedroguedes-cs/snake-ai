@@ -12,4 +12,4 @@ void printLine(int size = 100, char character = '-');
 
 
 //=====[TIME]=====
-void pause(int fps);
+void sleepFPS(int fps);

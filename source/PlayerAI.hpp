@@ -17,6 +17,7 @@ class PlayerAI
         virtual ~PlayerAI() = default;
 
         void clearPath();
+        std::deque<Direction> getPath();
         virtual bool findSolution(const Maze& maze, const Snake& snake);
         Direction nextMove();
 };

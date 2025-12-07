@@ -24,9 +24,10 @@ class Maze
         int getEatenFood() const;
 
         bool isCompleted() const;
-        bool markAsCompleted();
+        void markAsCompleted();
         
         void setFoodPosition(Position position);
+        void addEatenFood();
 
         bool isFood(Position position) const;
         bool isWall(Position position) const;
