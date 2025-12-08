@@ -33,6 +33,7 @@ SnakeGame::SnakeGame(GameConfig config)
 
     algorithm = config.algorithm;
     lives = config.lives;
+    originalLives = config.lives;
     foods = config.foods;
     fps = config.fps;
     score = 0;
@@ -45,8 +46,8 @@ SnakeGame::SnakeGame(GameConfig config)
 //=====[INFO]=====
 void SnakeGame::printInfo()
 {
-    std::cout << "\nLevel:          " << currentMazeIndex + 1;
-    std::cout << "\nLives:          " << lives;
+    std::cout << "\nLevel:          (" << currentMazeIndex + 1 << "/" << mazes.size() << ")";
+    std::cout << "\nLives:          (" <<  lives << "/" << originalLives << ")";
     std::cout << "\nLevel foods:    (" << mazes[currentMazeIndex].getEatenFood() << "/" << foods << ")\n";
     printLine(100);
     std::cout << "\n\n";
@@ -82,12 +83,14 @@ void SnakeGame::printMazesInfo()
 {
     printSubtitle("MAZES INFO");
 
-    std::cout << "\nLoaded mazes:  " << mazes.size() << "\n";
+    std::cout << "\nLoaded mazes:  " << mazes.size();
 
     for (size_t i = 0; i < mazes.size(); i++)
     {
-        std::cout << "\nMaze " << i + 1 << " [ rows: " <<  mazes[i].getRows() << " | columns: " << mazes[i].getColumns() << " | begin: (" << mazes[i].getBeginPosition().row << "," << mazes[i].getBeginPosition().column << ") ]\n";
+        std::cout << "\nMaze " << i + 1 << " [ rows: " <<  mazes[i].getRows() << " | columns: " << mazes[i].getColumns() << " | begin: (" << mazes[i].getBeginPosition().row << "," << mazes[i].getBeginPosition().column << ") ]";
     }
+
+    breakLine();
 }
 
 void SnakeGame::printMaze()
@@ -154,6 +157,7 @@ void SnakeGame::printMaze()
 bool SnakeGame::loadGame(std::string filePath)
 {
     std::string loadSubtitle = "Loading: " + filePath;
+    breakLine(3);
     printSubtitle(loadSubtitle);
 
     std::ifstream File(filePath);
@@ -376,13 +380,9 @@ void SnakeGame::updateState()
         case GameState::MAZE_COMPLETED:
             updateMazeCompletedState();
             break;
-        case GameState::WIN:
-            updateWinState();
+        case GameState::END:
+            updateEnd();
             break;
-        case GameState::LOSE:
-            updateLoseState();
-            break;
-
         default:
             break;    
     }
@@ -429,16 +429,10 @@ void SnakeGame::updateMazeCompletedState()
     }
 }
 
-void SnakeGame::updateWinState()
-{
-   isRunning = false; 
-}
-
-void SnakeGame::updateLoseState()
+void SnakeGame::updateEnd()
 {
     isRunning = false;
 }
-
 
 
 //=====[RENDER]=====
@@ -470,6 +464,9 @@ void SnakeGame::renderState()
         case GameState::LOSE:
             renderLoseState();
             break;
+        case GameState::END:
+            renderEnd();
+            break;
         default:
             break;
     }
@@ -477,6 +474,7 @@ void SnakeGame::renderState()
 
 void SnakeGame::renderInitState()
 {
+    printSectionDivider();
     printSubtitle("INIT");
     printMessage("LET'S GET STARTED!");
     printConfig();
@@ -486,6 +484,7 @@ void SnakeGame::renderInitState()
 
 void SnakeGame::renderLoadMazeState()
 {
+    printSectionDivider();
     printSubtitle("MAZE LOADED");
     printMessage("LET'S PLAY!");
     printInfo();
@@ -495,6 +494,7 @@ void SnakeGame::renderLoadMazeState()
 
 void SnakeGame::renderPlayState()
 {
+    printSectionDivider();
     printSubtitle("PLAY");
     printMessage("LET'S GO AI!");
     printInfo();
@@ -504,6 +504,7 @@ void SnakeGame::renderPlayState()
 
 void SnakeGame::renderEatState()
 {
+    printSectionDivider();
     printSubtitle("EAT");
     printMessage("GOOD JOB AI!");
     printInfo();
@@ -513,6 +514,7 @@ void SnakeGame::renderEatState()
 
 void SnakeGame::renderHitState()
 {
+    printSectionDivider();
     printSubtitle("HIT");
     printMessage("OHHH NO!");
     printInfo();
@@ -522,6 +524,7 @@ void SnakeGame::renderHitState()
 
 void SnakeGame::renderMazeCompletedState()
 {
+    printSectionDivider();
     printSubtitle("MAZE COMPLETED");
     std::string messageMazeCompleted = "UHUU! LEVEL " + std::to_string(currentMazeIndex) + " COMPLETED";
     printMessage(messageMazeCompleted);
@@ -530,6 +533,7 @@ void SnakeGame::renderMazeCompletedState()
 
 void SnakeGame::renderWinState()
 {
+    printSectionDivider();
     printSubtitle("WIN");
     printMessage("CONGRATULATIONS AI!");
     printInputMessage();
@@ -537,9 +541,15 @@ void SnakeGame::renderWinState()
 
 void SnakeGame::renderLoseState()
 {
+    printSectionDivider();
     printSubtitle("LOSE");
     printMessage("TRY AGAIN AI!");
     printInputMessage();
+}
+
+void SnakeGame::renderEnd()
+{
+    printEndMessage();
 }
 
 

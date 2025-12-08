@@ -20,4 +20,7 @@ OU
 - [ ] **Extra**: 
 
 --------
+
+compile: -> source/ + g++ algorithmUtils.cpp ArgumentParser.cpp PlayerAI.cpp Snake.cpp SnakeGame.cpp utils.cpp Maze.cpp main.cpp -o SnakeGameExe
+
 &copy; DIMAp/UFRN 2021.

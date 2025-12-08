@@ -17,11 +17,13 @@ int main(int argc, char* argv[])
 
   if (!cliSuccess)
   {
-    std::cout << "\n\n=====[CLI: fail]\n\n";
+    breakLine(3);
+    printSubtitle("CLI: fail");
     return 1;
   }
 
-  std::cout << "\n\n=====[CLI: success]\n\n";
+  breakLine(3);
+  printSubtitle("CLI: success");
 
 
   // Load
@@ -31,11 +33,13 @@ int main(int argc, char* argv[])
 
   if (!loadSuccess)
   {
-    std::cout << "\n\n=====[LOAD: fail]\n\n";
+    breakLine(3);
+    printSubtitle("Load: fail");
     return 1;
   }
 
-  std::cout << "\n\n=====[LOAD: success]\n\n";
+  breakLine(3);
+  printSubtitle("Load: success");
 
   // Run game
   game.runGame();

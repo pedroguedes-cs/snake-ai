@@ -7,6 +7,7 @@
 #include "PlayerAI.hpp"
 #include "Node.hpp"
 #include "algorithmUtils.hpp"
+#include "utils.hpp"
 
 
 void PlayerAI::clearPath()
@@ -71,9 +72,10 @@ bool BFSPlayerAI::findSolution(const Maze& maze, const Snake& snake)
 
             bool validInMaze = isValidInMaze(snakeProjection[0], maze);
             bool hitSnake = hitItself(snakeProjection);
+            bool moveOverSnake = moveOverItself(storage[currentIndex].snakeProjection, snakeProjection);
             bool wasVisited = (visited.find(snakeProjection) != visited.end());
 
-            if (validInMaze && !hitSnake && !wasVisited)
+            if (validInMaze && !hitSnake && !moveOverSnake && !wasVisited)
             {
                 visited.insert(snakeProjection);
                 storage.push_back(Node {d, snakeProjection, currentIndex});
@@ -93,6 +95,8 @@ bool BFSPlayerAI::findSolution(const Maze& maze, const Snake& snake)
             moves.push_back(storage[nodeIndex].move);
             nodeIndex = storage[nodeIndex].parent;
         }
+
+        moves.push_back(NONE);
 
         std::reverse(moves.begin(), moves.end());
 
@@ -136,9 +140,10 @@ bool DFSPlayerAI::findSolution(const Maze& maze, const Snake& snake)
 
             bool validInMaze = isValidInMaze(snakeProjection[0], maze);
             bool hitSnake = hitItself(snakeProjection);
+            bool moveOverSnake = moveOverItself(storage[currentIndex].snakeProjection, snakeProjection);
             bool wasVisited = (visited.find(snakeProjection) != visited.end());
 
-            if (validInMaze && !hitSnake && !wasVisited)
+            if (validInMaze && !hitSnake && !moveOverSnake && !wasVisited)
             {
                 visited.insert(snakeProjection);
                 storage.push_back(Node {d, snakeProjection, currentIndex});
@@ -159,6 +164,8 @@ bool DFSPlayerAI::findSolution(const Maze& maze, const Snake& snake)
             nodeIndex = storage[nodeIndex].parent;
         }
 
+        moves.push_back(NONE);
+
         std::reverse(moves.begin(), moves.end());
 
         this->path = moves;
@@ -169,5 +176,49 @@ bool DFSPlayerAI::findSolution(const Maze& maze, const Snake& snake)
 
 bool RandomPlayerAI::findSolution(const Maze& maze, const Snake& snake)
 {
-    return true;
+    bool find = false;
+    size_t maxSteps = std::min(maze.getRows() * maze.getColumns() * 2, (size_t)1000);
+
+    std::vector<Direction> directions = {UP, DOWN, LEFT, RIGHT};
+    std::deque<Direction> moves;
+    std::deque<Position> currentSnake = snake.getBody();
+
+    for (size_t i = 0; i < maxSteps; i++)
+    {
+        if (maze.isFood(currentSnake[0]))
+        {
+            find = true;
+            break;
+        }
+
+        std::vector<Direction> validMoves;
+
+        for (auto d : directions)
+        {
+            std::deque<Position> snakeProjection = simulateMove(currentSnake, d);
+
+            bool validInMaze = isValidInMaze(snakeProjection[0], maze);
+            bool hitSnake = hitItself(snakeProjection);
+            bool moveOverSnake = moveOverItself(currentSnake, snakeProjection);
+
+            if (validInMaze && !hitSnake && !moveOverSnake)
+            {
+                validMoves.push_back(d);
+            } 
+        }
+
+        if (validMoves.empty())
+        {
+            moves.push_back(UP);
+            break;
+        }
+
+        Direction randomMove = validMoves[random(0, validMoves.size() - 1)];
+        currentSnake = simulateMove(currentSnake, randomMove);
+        moves.push_back(randomMove);
+    }
+
+    path = moves;
+
+    return find;
 }

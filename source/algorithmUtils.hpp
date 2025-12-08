@@ -10,3 +10,4 @@ std::deque<Position> simulateMove(std::deque<Position> snakeProjection, Directio
 Position simulateNeighbor(Position position, Direction direction);
 bool isValidInMaze(Position position, const Maze& maze);
 bool hitItself(std::deque<Position> snakeProjection);
+bool moveOverItself(std::deque<Position> current, std::deque<Position> projection);
