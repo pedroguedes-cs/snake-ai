@@ -87,8 +87,10 @@ void SnakeGame::printMazesInfo()
 
     for (size_t i = 0; i < mazes.size(); i++)
     {
-        std::cout << "\nMaze " << i + 1 << " [ rows: " <<  mazes[i].getRows() << " | columns: " << mazes[i].getColumns() << " | begin: (" << mazes[i].getBeginPosition().row << "," << mazes[i].getBeginPosition().column << ") ]\n";
+        std::cout << "\nMaze " << i + 1 << " [ rows: " <<  mazes[i].getRows() << " | columns: " << mazes[i].getColumns() << " | begin: (" << mazes[i].getBeginPosition().row << "," << mazes[i].getBeginPosition().column << ") ]";
     }
+
+    breakLine();
 }
 
 void SnakeGame::printMaze()
