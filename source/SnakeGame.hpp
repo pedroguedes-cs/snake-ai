@@ -20,6 +20,7 @@ class SnakeGame
 
     Algorithm algorithm;
     int lives;
+    int originalLives;
     int foods;
     int fps;
     int score;
@@ -50,8 +51,7 @@ class SnakeGame
         void updateEatState();
         void updateHitState();
         void updateMazeCompletedState();
-        void updateWinState();
-        void updateLoseState();
+        void updateEnd();
 
         void renderState(); // Game loop 3
         void renderInitState();
@@ -62,6 +62,7 @@ class SnakeGame
         void renderMazeCompletedState();
         void renderWinState();
         void renderLoseState();
+        void renderEnd();
 
         void placeFood();
 

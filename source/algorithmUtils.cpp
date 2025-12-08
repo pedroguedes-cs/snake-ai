@@ -100,3 +100,18 @@ bool hitItself(std::deque<Position> snakeProjection)
 
     return hit;
 }
+
+bool moveOverItself(std::deque<Position> current, std::deque<Position> projection)
+{
+    if (current.size() != projection.size())
+    {
+        return false;
+    }
+
+    if (current.size() != 2)
+    {
+        return false;
+    }
+
+    return (current[0] == projection[1] && current[1] == projection[0]);
+}
