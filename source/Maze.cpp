@@ -1,3 +1,5 @@
+#include <vector>
+
 #include "Maze.hpp"
 
 Maze::Maze(const std::vector<std::string>& lines)
@@ -49,6 +51,24 @@ size_t Maze::getColumns() const
 int Maze::getEatenFood() const
 {
     return eatenFoods;
+}
+
+std::vector<Position> Maze::getFreePositions()
+{
+    std::vector<Position> freePositions;
+
+    for (size_t i = 0; i < board.size(); i++)
+    {
+        for (size_t j = 0; j < board[0].size(); j++)
+        {
+            if (board[i][j] == ' ')
+            {
+                freePositions.push_back(Position {(int)i, (int)j});
+            }
+        }
+    }
+
+    return freePositions;
 }
 
 bool Maze::isCompleted() const
@@ -110,6 +130,15 @@ bool Maze::isBlank(Position position) const
     return (board[position.row][position.column] == ' ' || board[position.row][position.column] == '&');
 }
 
+bool Maze::isOutOfBounds(Position position)
+{
+    bool up = position.row < 0;
+    bool down = position.row >= getRows();
+    bool left = position.column < 0;
+    bool right = position.column >= getColumns();
+
+    return (up || down || left || right);
+}
 
 bool Maze::validPosition(Position position) const
 {

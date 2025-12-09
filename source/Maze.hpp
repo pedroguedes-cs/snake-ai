@@ -22,6 +22,7 @@ class Maze
         size_t getRows() const;
         size_t getColumns() const;
         int getEatenFood() const;
+        std::vector<Position> getFreePositions();
 
         bool isCompleted() const;
         void markAsCompleted();
@@ -33,6 +34,7 @@ class Maze
         bool isWall(Position position) const;
         bool isInvisibleWall(Position position) const;
         bool isBlank(Position position) const;
+        bool isOutOfBounds(Position position);
 
         bool validPosition(Position position) const;
 };

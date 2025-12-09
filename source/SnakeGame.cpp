@@ -5,6 +5,7 @@
 #include <set>
 #include <queue>
 #include <deque>
+#include <vector>
 #include <string>
 
 #include "SnakeGame.hpp"
@@ -624,7 +625,7 @@ void SnakeGame::renderWinState()
     printSectionDivider();
     printSubtitle("WIN");
     printMessage("CONGRATULATIONS AI!");
-    printInputMessage();
+    printExitInputMessage();
 }
 
 void SnakeGame::renderLoseState()
@@ -632,7 +633,7 @@ void SnakeGame::renderLoseState()
     printSectionDivider();
     printSubtitle("LOSE");
     printMessage("TRY AGAIN AI!");
-    printInputMessage();
+    printExitInputMessage();
 }
 
 void SnakeGame::renderEnd()
@@ -644,40 +645,33 @@ void SnakeGame::renderEnd()
 //=====[OPERATIONS]=====
 void SnakeGame::placeFood()
 {
-    std::set<Position> visited;
-    std::queue<Position> positionsToCheck;
-    std::vector<Position> allPositions;
-    std::vector<Direction> directions = {UP, DOWN, LEFT, RIGHT};
+    std::vector<Position> mazeFreePositions = mazes[currentMazeIndex].getFreePositions();
+    std::deque<Position> snakeBody = snake.getBody();
 
-    Position currentPosition = snake.getHeadPosition();
-    positionsToCheck.push(currentPosition);
-    allPositions.push_back(currentPosition);
-    
-    visited.insert(currentPosition);
+    std::vector<Position> filtered;
 
-    while (!positionsToCheck.empty())
+    for (size_t i = 0; i < mazeFreePositions.size(); i++)
     {
-        currentPosition = positionsToCheck.front();
-        positionsToCheck.pop();
+        bool isSnake = std::find(snakeBody.begin(), snakeBody.end(), mazeFreePositions[i]) != snakeBody.end();
 
-        for (auto d : directions)
+        if (!isSnake)
         {
-            Position neighbor = simulateNeighbor(currentPosition, d);
-
-            bool validInMaze = isValidInMaze(neighbor, mazes[currentMazeIndex]);
-            bool isSnake = snake.isSnake(neighbor);
-            bool wasVisited = (visited.find(neighbor) != visited.end());
-
-            if (validInMaze && !isSnake && !wasVisited)
-            {
-                visited.insert(neighbor);
-                allPositions.push_back(neighbor);
-                positionsToCheck.push(neighbor);
-            }
+            filtered.push_back(mazeFreePositions[i]);
         }
     }
 
-    Position foodPosition = allPositions.back();
+    Position foodPosition;
+
+    if (filtered.empty())
+    {
+        foodPosition = snakeBody[0];
+    }
+    else
+    {
+        size_t randomIndex = random(0, filtered.size() - 1);
+        foodPosition = filtered[randomIndex];
+    }
+
     mazes[currentMazeIndex].setFoodPosition(foodPosition);
 }
 
@@ -690,7 +684,7 @@ bool SnakeGame::snakeEat()
 
 bool SnakeGame::snakeHit()
 {
-    return (mazes[currentMazeIndex].isWall(snake.getHeadPosition()) || snake.isSnakeBody(snake.getHeadPosition()));
+    return (mazes[currentMazeIndex].isWall(snake.getHeadPosition()) || snake.isSnakeBody(snake.getHeadPosition()) || mazes[currentMazeIndex].isOutOfBounds(snake.getHeadPosition()));
 }
 
 bool SnakeGame::mazeCompleted()
