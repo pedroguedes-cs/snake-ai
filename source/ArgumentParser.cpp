@@ -22,7 +22,7 @@ std::optional<GameConfig> ArgumentParser::parseArguments(int argc, char* argv[])
     // Find tags
     GameConfig config;
     std::vector<std::string> tags = {"--fps", "--lives", "--foods", "--playertype"};
-    std::vector<std::string> playertypes = {"bfs", "dfs", "random"};
+    std::vector<std::string> playertypes = {"bfs", "dfs", "gbfs", "astar", "random"};
 
     for (int i = 1; i < argc; i++)
     {
@@ -59,6 +59,14 @@ std::optional<GameConfig> ArgumentParser::parseArguments(int argc, char* argv[])
                 else if (nextArgument == "bfs")
                 {
                     config.algorithm = BFS;
+                }
+                else if (nextArgument == "gbfs")
+                {
+                    config.algorithm = GBFS;
+                }
+                else if (nextArgument == "astar")
+                {
+                    config.algorithm = A_STAR;
                 }
                 else if (nextArgument == "random")
                 {
@@ -151,5 +159,5 @@ void ArgumentParser::printHelpMessage(std::string error)
     std::cout << "\n        --fps <num>             Number of frames (boards) presented per second. Default = 2";
     std::cout << "\n        --lives <num>           Number of lives the snake shall have. Default = 5.";
     std::cout << "\n        --foods <num>           Number of food pallets for the entire simulation. Default = 10.";
-    std::cout << "\n        --playertype <type>     Type of snake intelligence: bfs, dfs, random. Default = bfs";
+    std::cout << "\n        --playertype <type>     Type of snake intelligence: bfs, dfs, gbfs, astar, random. Default = bfs";
 }

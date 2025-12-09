@@ -34,6 +34,18 @@ class DFSPlayerAI : public PlayerAI
         bool findSolution(const Maze& maze, const Snake& snake) override;
 };
 
+class AStarPlayerAI : public PlayerAI
+{
+    public:
+        bool findSolution(const Maze& maze, const Snake& snake) override;
+};
+
+class GBFSPlayerAI : public PlayerAI
+{
+    public:
+        bool findSolution(const Maze& maze, const Snake& snake) override;
+};
+
 class RandomPlayerAI : public PlayerAI
 {
     public:

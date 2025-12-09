@@ -4,6 +4,7 @@
 #include <random>
 
 #include "utils.hpp"
+#include "Position.hpp"
 
 void printTitle(std::string title)
 {
@@ -79,4 +80,12 @@ int random(int begin_range, int end_range)
     static std::mt19937 gen(rd());
     std::uniform_int_distribution<> distrib(begin_range, end_range);
     return distrib(gen);
+}
+
+int manhattanDistance(Position position1, Position position2)
+{
+    int distanceX = std::abs(position1.column - position2.column);
+    int distanceY = std::abs(position1.row - position2.row);
+
+    return (distanceX + distanceY);
 }

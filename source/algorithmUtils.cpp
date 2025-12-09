@@ -1,7 +1,9 @@
+#include <vector>
 #include <deque>
 
 #include "algorithmUtils.hpp"
 #include "Position.hpp"
+#include "Node.hpp"
 #include "Direction.hpp"
 #include "Maze.hpp"
 
@@ -114,4 +116,17 @@ bool moveOverItself(std::deque<Position> current, std::deque<Position> projectio
     }
 
     return (current[0] == projection[1] && current[1] == projection[0]);
+}
+
+void insertLastNodeInSorted(std::vector<InformedNode>& storage, std::vector<size_t>& candidates)
+{
+    size_t storageIndex = storage.size() - 1;
+    candidates.push_back(storageIndex);
+    size_t candidatesIndex = candidates.size() - 1;
+
+    while (candidatesIndex > 0 && storage[candidates[candidatesIndex]].cost > storage[candidates[candidatesIndex - 1]].cost)
+    {
+        std::swap(candidates[candidatesIndex], candidates[candidatesIndex - 1]);
+        candidatesIndex--;
+    }
 }
