@@ -130,3 +130,13 @@ void insertLastNodeInSorted(std::vector<InformedNode>& storage, std::vector<size
         candidatesIndex--;
     }
 }
+
+size_t indexAtMaze(Position position, Maze maze)
+{
+    size_t rows = maze.getRows();
+    size_t columns = maze.getColumns();
+
+    size_t index = (columns * position.row) + position.column;
+
+    return index;
+}

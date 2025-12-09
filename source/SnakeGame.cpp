@@ -57,8 +57,9 @@ void SnakeGame::printInfo()
     std::cout << "\nLevel:          (" << currentMazeIndex + 1 << "/" << mazes.size() << ")";
     std::cout << "\nLives:          (" <<  lives << "/" << originalLives << ")";
     std::cout << "\nLevel foods:    (" << mazes[currentMazeIndex].getEatenFood() << "/" << foods << ")\n";
+    
     printLine(100);
-    std::cout << "\n\n";
+    breakLine();
 }
 
 void SnakeGame::printConfig()
@@ -111,7 +112,7 @@ void SnakeGame::printMazesInfo()
 
 void SnakeGame::printMaze()
 {
-    std::cout << "\n";
+    breakLine();
 
     for (size_t r = 0; r < mazes[currentMazeIndex].getRows(); r++)
     {
@@ -164,8 +165,73 @@ void SnakeGame::printMaze()
             }
         }
 
-        std::cout << "\n";
+        breakLine();
     }
+
+    breakLine();
+    printLine(100);
+    breakLine();
+}
+
+void SnakeGame::printMazeVisitedPoints()
+{
+    printMessage("[INFO] Positions AI visited to solve the maze");
+    breakLine();
+
+    auto visitedPositions = playerAIPtr->getVisitedPositions();
+
+    for (size_t r = 0; r < mazes[currentMazeIndex].getRows(); r++)
+    {
+        for (size_t c = 0; c < mazes[currentMazeIndex].getColumns(); c++)
+        {
+            Position currentPosition = {(int)r, (int)c};
+
+            bool snakeHead = snake.isSnakeHead(currentPosition);
+            bool snakeBody = snake.isSnakeBody(currentPosition);
+
+            bool wall = mazes[currentMazeIndex].isWall(currentPosition);
+            bool invisibleWall = mazes[currentMazeIndex].isInvisibleWall(currentPosition);
+            bool food = mazes[currentMazeIndex].isFood(currentPosition);
+            bool blank = mazes[currentMazeIndex].isBlank(currentPosition);
+
+            bool visited = (visitedPositions.find(indexAtMaze(currentPosition, mazes[currentMazeIndex])) != visitedPositions.end());
+
+            if (food)
+            {
+                printFood();
+            }
+            else if (snakeHead)
+            {
+                printSnakeHead();
+            }
+            else if (snakeBody)
+            {
+                printSnakeBody();
+            }
+            else if (visited)
+            {
+                printVisited();
+            }
+            else if (wall)
+            {
+                printWall();
+            }
+            else if (invisibleWall)
+            {
+                printInvisibleWall();
+            }
+            else
+            {
+                printBlank();
+            }
+        }
+
+        breakLine();
+    }   
+
+    breakLine();
+    printLine(100);
+    breakLine();
 }
 
 
@@ -504,6 +570,12 @@ void SnakeGame::renderLoadMazeState()
     printSubtitle("MAZE LOADED");
     printMessage("LET'S PLAY!");
     printInfo();
+
+    if (algorithm != RANDOM)
+    {
+        printMazeVisitedPoints();
+    }
+
     printMaze();
     printInputMessage();
 }
@@ -676,4 +748,9 @@ void SnakeGame::printFind()
 void SnakeGame::printHit()
 {
     std::cout << 'x';
+}
+
+void SnakeGame::printVisited()
+{
+    std::cout << 'v';
 }

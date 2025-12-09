@@ -1,6 +1,7 @@
 #pragma once 
 
 #include <deque>
+#include <unordered_map>
 
 #include "Algorithm.hpp"
 #include "Direction.hpp"
@@ -12,12 +13,15 @@ class PlayerAI
 {
     protected:
         std::deque<Direction> path;
+        std::unordered_map<size_t, bool> visitedPositions;
 
     public:
         virtual ~PlayerAI() = default;
 
         void clearPath();
+        void clearVisitedPositions();
         std::deque<Direction> getPath();
+        std::unordered_map<size_t, bool> getVisitedPositions();
         virtual bool findSolution(const Maze& maze, const Snake& snake);
         Direction nextMove();
 };
