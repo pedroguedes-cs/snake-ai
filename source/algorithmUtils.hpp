@@ -14,3 +14,5 @@ bool hitItself(std::deque<Position> snakeProjection);
 bool moveOverItself(std::deque<Position> current, std::deque<Position> projection);
 
 void insertLastNodeInSorted(std::vector<InformedNode>& storage, std::vector<size_t>& candidates);
+
+size_t indexAtMaze(Position position, Maze maze);

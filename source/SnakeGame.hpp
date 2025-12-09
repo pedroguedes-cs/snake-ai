@@ -35,6 +35,7 @@ class SnakeGame
         void printConfig();
         void printMazesInfo();
         void printMaze();
+        void printMazeVisitedPoints();
 
         bool loadGame(std::string filePath);
         
@@ -80,4 +81,5 @@ class SnakeGame
         void printBlank();
         void printFind();
         void printHit();
+        void printVisited();
 };

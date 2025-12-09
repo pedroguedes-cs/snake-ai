@@ -1,5 +1,6 @@
 #include <iostream>
 #include <algorithm>
+#include <unordered_map>
 #include <set>
 #include <queue>
 #include <stack>
@@ -15,9 +16,19 @@ void PlayerAI::clearPath()
     path.clear();
 }
 
+void PlayerAI::clearVisitedPositions()
+{
+    visitedPositions.clear();
+}
+
 std::deque<Direction> PlayerAI::getPath()
 {
     return path;
+}
+
+std::unordered_map<size_t, bool> PlayerAI::getVisitedPositions()
+{
+    return visitedPositions;
 }
 
 Direction PlayerAI::nextMove()
@@ -35,15 +46,21 @@ Direction PlayerAI::nextMove()
 
 bool PlayerAI::findSolution(const Maze& maze, const Snake& snake)
 {
+    clearPath();
+    clearVisitedPositions();
     return true;
 }
 
 bool BFSPlayerAI::findSolution(const Maze& maze, const Snake& snake)
 {
+    clearPath();
+    clearVisitedPositions();
+
     bool hasSolution = false;
     size_t goal = 0;
 
     std::vector<Direction> directions = {UP, DOWN, LEFT, RIGHT};
+    std::unordered_map<size_t, bool> visitedPositionsMap;
     std::set<std::deque<Position>> visited;
     std::vector<Node> storage;
     std::queue<size_t> candidates;
@@ -54,7 +71,9 @@ bool BFSPlayerAI::findSolution(const Maze& maze, const Snake& snake)
 
     while (!candidates.empty())
     {
+        
         size_t currentIndex = candidates.front();
+        visitedPositionsMap[indexAtMaze(storage[currentIndex].snakeProjection[0], maze)] = true;
         candidates.pop();
 
         // Found
@@ -83,6 +102,8 @@ bool BFSPlayerAI::findSolution(const Maze& maze, const Snake& snake)
             }
         }
     }
+
+    visitedPositions = visitedPositionsMap;
 
     if (hasSolution)
     {
@@ -108,10 +129,14 @@ bool BFSPlayerAI::findSolution(const Maze& maze, const Snake& snake)
 
 bool DFSPlayerAI::findSolution(const Maze& maze, const Snake& snake)
 {
+    clearPath();
+    clearVisitedPositions();
+
     bool hasSolution = false;
     size_t goal = 0;
 
     std::vector<Direction> directions = {UP, DOWN, LEFT, RIGHT};
+    std::unordered_map<size_t, bool> visitedPositionsMap;
     std::set<std::deque<Position>> visited;
     std::vector<Node> storage;
     std::stack<size_t> candidates;
@@ -123,6 +148,7 @@ bool DFSPlayerAI::findSolution(const Maze& maze, const Snake& snake)
     while (!candidates.empty())
     {
         size_t currentIndex = candidates.top();
+        visitedPositionsMap[indexAtMaze(storage[currentIndex].snakeProjection[0], maze)] = true;
         candidates.pop();
 
         // Found
@@ -152,6 +178,8 @@ bool DFSPlayerAI::findSolution(const Maze& maze, const Snake& snake)
         }
     }
 
+    visitedPositions = visitedPositionsMap;
+
     if (hasSolution)
     {
         // Rebuild path
@@ -176,11 +204,15 @@ bool DFSPlayerAI::findSolution(const Maze& maze, const Snake& snake)
 
 bool AStarPlayerAI::findSolution(const Maze& maze, const Snake& snake)
 {
+    clearPath();
+    clearVisitedPositions();
+
     bool hasSolution = false;
     Position food = maze.getFoodPosition();
     size_t goal = 0;
 
     std::vector<Direction> directions = {UP, DOWN, LEFT, RIGHT};
+    std::unordered_map<size_t, bool> visitedPositionsMap;
     std::set<std::deque<Position>> visited;
     std::vector<InformedNode> storage;
     std::vector<size_t> candidates;
@@ -196,6 +228,7 @@ bool AStarPlayerAI::findSolution(const Maze& maze, const Snake& snake)
     while (!candidates.empty())
     {
         size_t currentIndex = candidates.back();
+        visitedPositionsMap[indexAtMaze(storage[currentIndex].snakeProjection[0], maze)] = true;
         candidates.pop_back();
 
         // Found
@@ -230,6 +263,8 @@ bool AStarPlayerAI::findSolution(const Maze& maze, const Snake& snake)
         }
     }
 
+    visitedPositions = visitedPositionsMap;
+
     if (hasSolution)
     {
         // Rebuild path
@@ -254,11 +289,15 @@ bool AStarPlayerAI::findSolution(const Maze& maze, const Snake& snake)
 
 bool GBFSPlayerAI::findSolution(const Maze& maze, const Snake& snake)
 {
+    clearPath();
+    clearVisitedPositions();
+
     bool hasSolution = false;
     Position food = maze.getFoodPosition();
     size_t goal = 0;
 
     std::vector<Direction> directions = {UP, DOWN, LEFT, RIGHT};
+    std::unordered_map<size_t, bool> visitedPositionsMap;
     std::set<std::deque<Position>> visited;
     std::vector<InformedNode> storage;
     std::vector<size_t> candidates;
@@ -273,6 +312,7 @@ bool GBFSPlayerAI::findSolution(const Maze& maze, const Snake& snake)
     while (!candidates.empty())
     {
         size_t currentIndex = candidates.back();
+        visitedPositionsMap[indexAtMaze(storage[currentIndex].snakeProjection[0], maze)] = true;
         candidates.pop_back();
 
         // Found
@@ -306,6 +346,8 @@ bool GBFSPlayerAI::findSolution(const Maze& maze, const Snake& snake)
         }
     }
 
+    visitedPositions = visitedPositionsMap;
+
     if (hasSolution)
     {
         // Rebuild path
@@ -331,6 +373,9 @@ bool GBFSPlayerAI::findSolution(const Maze& maze, const Snake& snake)
 
 bool RandomPlayerAI::findSolution(const Maze& maze, const Snake& snake)
 {
+    clearPath();
+    clearVisitedPositions();
+
     bool find = false;
     size_t maxSteps = std::min(maze.getRows() * maze.getColumns() * 2, (size_t)1000);
 
