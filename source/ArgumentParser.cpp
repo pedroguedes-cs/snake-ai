@@ -4,6 +4,7 @@
 #include <algorithm>
 
 #include "ArgumentParser.hpp"
+#include "utils.hpp"
 
 std::optional<GameConfig> ArgumentParser::parseArguments(int argc, char* argv[])
 {
@@ -21,7 +22,7 @@ std::optional<GameConfig> ArgumentParser::parseArguments(int argc, char* argv[])
 
     // Find tags
     GameConfig config;
-    std::vector<std::string> tags = {"--fps", "--lives", "--foods", "--playertype"};
+    std::vector<std::string> tags = {"--fps", "--lives", "--foods", "--playertype", "--exploration-view"};
     std::vector<std::string> playertypes = {"bfs", "dfs", "gbfs", "astar", "random"};
 
     for (int i = 1; i < argc; i++)
@@ -33,13 +34,18 @@ std::optional<GameConfig> ArgumentParser::parseArguments(int argc, char* argv[])
 
         if (isTag)
         {
-            if (isLastArgument)
+            if (currentArgument == "--exploration-view")
+            {
+                config.explorationView = true;
+            }
+
+            else if (isLastArgument)
             {
                 printHelpMessage("Missing arguments");
                 return std::nullopt;
             }
 
-            if (currentArgument == "--playertype")
+            else if (currentArgument == "--playertype")
             {
                 std::string nextArgument = argv[i+1];
                 i++;
@@ -147,7 +153,7 @@ std::optional<GameConfig> ArgumentParser::parseArguments(int argc, char* argv[])
 
 void ArgumentParser::printHelpMessage(std::string error)
 {
-    std::cout << "\n\nUsage: snaze [<options>] <input_level_file>";
+    std::cout << "Usage: snaze [<options>] <input_level_file>";
 
     if (!error.empty())
     {
@@ -156,8 +162,11 @@ void ArgumentParser::printHelpMessage(std::string error)
 
     std::cout << "\n    Game simulation options:";
     std::cout << "\n        --help                  Print this help text.";
-    std::cout << "\n        --fps <num>             Number of frames (boards) presented per second. Default = 2";
+    std::cout << "\n        --exploration-view      Show search visualization (no Random).";
+    std::cout << "\n        --fps <num>             Number of frames (boards) presented per second. Default = 2.";
     std::cout << "\n        --lives <num>           Number of lives the snake shall have. Default = 5.";
     std::cout << "\n        --foods <num>           Number of food pallets for the entire simulation. Default = 10.";
-    std::cout << "\n        --playertype <type>     Type of snake intelligence: bfs, dfs, gbfs, astar, random. Default = bfs";
+    std::cout << "\n        --playertype <type>     Type of snake intelligence: bfs, dfs, gbfs, astar, random. Default = bfs.";
+
+    breakLine(3);
 }

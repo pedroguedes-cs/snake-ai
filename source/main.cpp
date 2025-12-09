@@ -17,12 +17,9 @@ int main(int argc, char* argv[])
 
   if (!cliSuccess)
   {
-    breakLine(3);
-    printSubtitle("CLI: fail");
     return 1;
   }
 
-  breakLine(3);
   printSubtitle("CLI: success");
 
 
@@ -33,12 +30,11 @@ int main(int argc, char* argv[])
 
   if (!loadSuccess)
   {
-    breakLine(3);
     printSubtitle("Load: fail");
+    breakLine(3);
     return 1;
   }
 
-  breakLine(3);
   printSubtitle("Load: success");
 
   // Run game

@@ -47,6 +47,7 @@ SnakeGame::SnakeGame(GameConfig config)
     score = 0;
 
     isRunning = true;
+    explorationView = config.explorationView;
     currentMazeIndex = 0;
 }
 
@@ -175,7 +176,7 @@ void SnakeGame::printMaze()
 
 void SnakeGame::printMazeVisitedPoints()
 {
-    printMessage("[INFO] Positions AI visited to solve the maze");
+    printSubtitle("EXPLORATION VIEW");
     breakLine();
 
     auto visitedPositions = playerAIPtr->getVisitedPositions();
@@ -239,7 +240,6 @@ void SnakeGame::printMazeVisitedPoints()
 bool SnakeGame::loadGame(std::string filePath)
 {
     std::string loadSubtitle = "Loading: " + filePath;
-    breakLine(3);
     printSubtitle(loadSubtitle);
 
     std::ifstream File(filePath);
@@ -571,7 +571,7 @@ void SnakeGame::renderLoadMazeState()
     printMessage("LET'S PLAY!");
     printInfo();
 
-    if (algorithm != RANDOM)
+    if (explorationView && algorithm != RANDOM)
     {
         printMazeVisitedPoints();
     }
@@ -722,17 +722,17 @@ void SnakeGame::printInvisibleWall()
 
 void SnakeGame::printFood()
 {
-    std::cout << 'f';
+    std::cout << '@';
 }
 
 void SnakeGame::printSnakeHead()
 {
-    std::cout << 'h';
+    std::cout << 'v';
 }
 
 void SnakeGame::printSnakeBody()
 {
-    std::cout << 'b';
+    std::cout << 'o';
 }
 
 void SnakeGame::printBlank()
@@ -752,5 +752,5 @@ void SnakeGame::printHit()
 
 void SnakeGame::printVisited()
 {
-    std::cout << 'v';
+    std::cout << '-';
 }
