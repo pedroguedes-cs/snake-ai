@@ -26,6 +26,14 @@ SnakeGame::SnakeGame(GameConfig config)
     {
         playerAIPtr = std::make_unique<DFSPlayerAI>();
     }
+    else if (config.algorithm == GBFS)
+    {
+        playerAIPtr = std::make_unique<GBFSPlayerAI>();
+    }
+    else if (config.algorithm == A_STAR)
+    {
+        playerAIPtr = std::make_unique<AStarPlayerAI>();
+    }
     else
     {
         playerAIPtr = std::make_unique<RandomPlayerAI>();
@@ -59,15 +67,23 @@ void SnakeGame::printConfig()
 
     std::string algorithmString = "";
 
-    if (algorithm == Algorithm::BFS)
+    if (algorithm == BFS)
     {
         algorithmString = "BFS";
     }
-    else if (algorithm == Algorithm::DFS)
+    else if (algorithm == DFS)
     {
         algorithmString = "DFS";
     }
-    else if (algorithm == Algorithm::RANDOM)
+    else if (algorithm == GBFS)
+    {
+        algorithmString = "GBFS";
+    }
+    else if (algorithm == A_STAR)
+    {
+        algorithmString = "A*";
+    }
+    else if (algorithm == RANDOM)
     {
         algorithmString = "Random";
     }

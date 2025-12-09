@@ -3,6 +3,7 @@
 #include <deque>
 
 #include "Position.hpp"
+#include "Node.hpp"
 #include "Direction.hpp"
 #include "Maze.hpp"
 
@@ -11,3 +12,5 @@ Position simulateNeighbor(Position position, Direction direction);
 bool isValidInMaze(Position position, const Maze& maze);
 bool hitItself(std::deque<Position> snakeProjection);
 bool moveOverItself(std::deque<Position> current, std::deque<Position> projection);
+
+void insertLastNodeInSorted(std::vector<InformedNode>& storage, std::vector<size_t>& candidates);

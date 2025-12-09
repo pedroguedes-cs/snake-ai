@@ -2,6 +2,8 @@
 
 #include <string>
 
+#include "Position.hpp"
+
 
 //=====[PRINTERS]=====
 void printTitle(std::string title);
@@ -21,3 +23,8 @@ void sleepFPS(int fps);
 
 //=====[RANDOM]=====
 int random(int begin_range, int end_range);
+
+
+//=====[MATH]=====
+int manhattanDistance(Position position1, Position position2);
+
