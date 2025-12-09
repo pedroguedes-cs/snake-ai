@@ -26,6 +26,7 @@ class SnakeGame
     int score;
 
     bool isRunning;
+    bool explorationView;
     size_t currentMazeIndex;
 
     public:

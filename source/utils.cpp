@@ -10,18 +10,18 @@ void printTitle(std::string title)
 {
     breakLine(3);
     printLine(100, '-');
-    std::cout << "\n";
+    breakLine();
 
     printLine(10, '=');
     std::cout << "[" << title << "]\n";
 
     printLine(100, '-');
-    std::cout << "\n\n\n";
+    breakLine(3);
 }
 
 void printSubtitle(std::string subtitle)
 {
-    std::cout << "\n";
+    breakLine();
     printLine(5, '=');
     std::cout << "[" << subtitle << "]\n";
 }
