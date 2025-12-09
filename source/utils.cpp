@@ -36,6 +36,11 @@ void printInputMessage()
     std::cout << "\n>>> Press enter to continue: ";
 }
 
+void printExitInputMessage()
+{
+    std::cout << "\n>>> Press enter to exit: ";
+}
+
 void printLine(int size, char character)
 {
     size = std::max(0, size);

@@ -625,7 +625,7 @@ void SnakeGame::renderWinState()
     printSectionDivider();
     printSubtitle("WIN");
     printMessage("CONGRATULATIONS AI!");
-    printInputMessage();
+    printExitInputMessage();
 }
 
 void SnakeGame::renderLoseState()
@@ -633,7 +633,7 @@ void SnakeGame::renderLoseState()
     printSectionDivider();
     printSubtitle("LOSE");
     printMessage("TRY AGAIN AI!");
-    printInputMessage();
+    printExitInputMessage();
 }
 
 void SnakeGame::renderEnd()
@@ -684,7 +684,7 @@ bool SnakeGame::snakeEat()
 
 bool SnakeGame::snakeHit()
 {
-    return (mazes[currentMazeIndex].isWall(snake.getHeadPosition()) || snake.isSnakeBody(snake.getHeadPosition()));
+    return (mazes[currentMazeIndex].isWall(snake.getHeadPosition()) || snake.isSnakeBody(snake.getHeadPosition()) || mazes[currentMazeIndex].isOutOfBounds(snake.getHeadPosition()));
 }
 
 bool SnakeGame::mazeCompleted()

@@ -34,6 +34,7 @@ class Maze
         bool isWall(Position position) const;
         bool isInvisibleWall(Position position) const;
         bool isBlank(Position position) const;
+        bool isOutOfBounds(Position position);
 
         bool validPosition(Position position) const;
 };

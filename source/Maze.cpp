@@ -130,6 +130,15 @@ bool Maze::isBlank(Position position) const
     return (board[position.row][position.column] == ' ' || board[position.row][position.column] == '&');
 }
 
+bool Maze::isOutOfBounds(Position position)
+{
+    bool up = position.row < 0;
+    bool down = position.row >= getRows();
+    bool left = position.column < 0;
+    bool right = position.column >= getColumns();
+
+    return (up || down || left || right);
+}
 
 bool Maze::validPosition(Position position) const
 {

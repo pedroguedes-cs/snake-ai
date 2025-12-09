@@ -10,6 +10,7 @@ void printTitle(std::string title);
 void printSubtitle(std::string subtitle);
 void printMessage(std::string message);
 void printInputMessage();
+void printExitInputMessage();
 void printLine(int size = 100, char character = '-');
 void printSectionDivider();
 void printEndMessage();
