@@ -19,6 +19,7 @@ void breakLine(int number = 1);
 
 
 //=====[TIME]=====
+void sleep(int seconds);
 void sleepFPS(int fps);
 
 

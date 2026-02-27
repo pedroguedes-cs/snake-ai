@@ -1,14 +1,14 @@
 #include <iostream>
 
-#include "ArgumentParser.hpp"
-#include "GameConfig.hpp"
-#include "SnakeGame.hpp"
-#include "utils.hpp"
+#include "../include/ArgumentParser.hpp"
+#include "../include/GameConfig.hpp"
+#include "../include/SnakeGame.hpp"
+#include "../include/utils.hpp"
 
 
 int main(int argc, char* argv[])
 {
-  printTitle("SNAKE GAME - PEDRO GUEDES");
+  printTitle("SNAKE AI - PEDRO GUEDES");
 
   // CLI
   ArgumentParser parser;
@@ -20,14 +20,17 @@ int main(int argc, char* argv[])
     return 1;
   }
 
+  sleep(2);
   printSubtitle("CLI: success");
 
 
   // Load
+  sleep(2);
   GameConfig validatedConfig = *config;
   SnakeGame game(validatedConfig);
   bool loadSuccess = game.loadGame(validatedConfig.filePath);
-
+  
+  sleep(2);
   if (!loadSuccess)
   {
     printSubtitle("Load: fail");

@@ -3,8 +3,8 @@
 #include <thread>
 #include <random>
 
-#include "utils.hpp"
-#include "Position.hpp"
+#include "../include/utils.hpp"
+#include "../include/Position.hpp"
 
 void printTitle(std::string title)
 {
@@ -60,7 +60,7 @@ void printSectionDivider()
 
 void printEndMessage()
 {
-    printTitle("THE END - SNAKE GAME - PEDRO GUEDES");
+    printTitle("THE END - SNAKE AI - PEDRO GUEDES");
 }
 
 void breakLine(int number)
@@ -71,6 +71,11 @@ void breakLine(int number)
     {
         std::cout << "\n";
     }
+}
+
+void sleep(int seconds) 
+{
+    std::this_thread::sleep_for(std::chrono::seconds(seconds));
 }
 
 void sleepFPS(int fps)

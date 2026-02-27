@@ -8,12 +8,12 @@
 #include <vector>
 #include <string>
 
-#include "SnakeGame.hpp"
-#include "Position.hpp"
-#include "Direction.hpp"
-#include "Node.hpp"
-#include "algorithmUtils.hpp"
-#include "utils.hpp"
+#include "../include/SnakeGame.hpp"
+#include "../include/Position.hpp"
+#include "../include/Direction.hpp"
+#include "../include/Node.hpp"
+#include "../include/algorithmUtils.hpp"
+#include "../include/utils.hpp"
 
 SnakeGame::SnakeGame(GameConfig config)
 {
@@ -558,9 +558,12 @@ void SnakeGame::renderState()
 void SnakeGame::renderInitState()
 {
     printSectionDivider();
+    sleep(2);
     printSubtitle("INIT");
     printMessage("LET'S GET STARTED!");
+    sleep(2);
     printConfig();
+    sleep(2);
     printMazesInfo();
     printInputMessage();
 }
@@ -576,8 +579,11 @@ void SnakeGame::renderLoadMazeState()
     {
         printMazeVisitedPoints();
     }
+    else 
+    {
+        printMaze();
+    }
 
-    printMaze();
     printInputMessage();
 }
 
@@ -593,6 +599,7 @@ void SnakeGame::renderPlayState()
 
 void SnakeGame::renderEatState()
 {
+    sleep(2);
     printSectionDivider();
     printSubtitle("EAT");
     printMessage("GOOD JOB AI!");
@@ -603,6 +610,7 @@ void SnakeGame::renderEatState()
 
 void SnakeGame::renderHitState()
 {
+    sleep(2);
     printSectionDivider();
     printSubtitle("HIT");
     printMessage("OHHH NO!");
@@ -613,6 +621,7 @@ void SnakeGame::renderHitState()
 
 void SnakeGame::renderMazeCompletedState()
 {
+    sleep(2);
     printSectionDivider();
     printSubtitle("MAZE COMPLETED");
     std::string messageMazeCompleted = "UHUU! LEVEL " + std::to_string(currentMazeIndex) + " COMPLETED";
@@ -622,6 +631,7 @@ void SnakeGame::renderMazeCompletedState()
 
 void SnakeGame::renderWinState()
 {
+    sleep(2);
     printSectionDivider();
     printSubtitle("WIN");
     printMessage("CONGRATULATIONS AI!");
@@ -630,6 +640,7 @@ void SnakeGame::renderWinState()
 
 void SnakeGame::renderLoseState()
 {
+    sleep(2);
     printSectionDivider();
     printSubtitle("LOSE");
     printMessage("TRY AGAIN AI!");
@@ -638,6 +649,7 @@ void SnakeGame::renderLoseState()
 
 void SnakeGame::renderEnd()
 {
+    sleep(2);
     printEndMessage();
 }
 
@@ -706,7 +718,7 @@ bool SnakeGame::snakeWin()
 //=====[PRINTERS]=====
 void SnakeGame::printWall()
 {
-    std::cout << '#';
+    std::cout << "█";
 }
 
 void SnakeGame::printInvisibleWall()

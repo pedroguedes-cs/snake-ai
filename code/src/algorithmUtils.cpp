@@ -1,11 +1,11 @@
 #include <vector>
 #include <deque>
 
-#include "algorithmUtils.hpp"
-#include "Position.hpp"
-#include "Node.hpp"
-#include "Direction.hpp"
-#include "Maze.hpp"
+#include "../include/algorithmUtils.hpp"
+#include "../include/Position.hpp"
+#include "../include/Node.hpp"
+#include "../include/Direction.hpp"
+#include "../include/Maze.hpp"
 
 std::deque<Position> simulateMove(std::deque<Position> snakeProjection, Direction direction)
 {

@@ -5,10 +5,10 @@
 #include <queue>
 #include <stack>
 
-#include "PlayerAI.hpp"
-#include "Node.hpp"
-#include "algorithmUtils.hpp"
-#include "utils.hpp"
+#include "../include/PlayerAI.hpp"
+#include "../include/Node.hpp"
+#include "../include/algorithmUtils.hpp"
+#include "../include/utils.hpp"
 
 
 void PlayerAI::clearPath()

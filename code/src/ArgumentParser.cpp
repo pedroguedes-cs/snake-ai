@@ -3,8 +3,8 @@
 #include <string>
 #include <algorithm>
 
-#include "ArgumentParser.hpp"
-#include "utils.hpp"
+#include "../include/ArgumentParser.hpp"
+#include "../include/utils.hpp"
 
 std::optional<GameConfig> ArgumentParser::parseArguments(int argc, char* argv[])
 {
@@ -153,7 +153,7 @@ std::optional<GameConfig> ArgumentParser::parseArguments(int argc, char* argv[])
 
 void ArgumentParser::printHelpMessage(std::string error)
 {
-    std::cout << "Usage: snaze [<options>] <input_level_file>";
+    std::cout << "Usage: snakeAI [<options>] <input_level_file>";
 
     if (!error.empty())
     {

@@ -1,4 +1,4 @@
-#include "Snake.hpp"
+#include "../include/Snake.hpp"
 
 
 Position Snake::getHeadPosition()

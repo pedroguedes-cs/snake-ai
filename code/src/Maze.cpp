@@ -1,6 +1,6 @@
 #include <vector>
 
-#include "Maze.hpp"
+#include "../include/Maze.hpp"
 
 Maze::Maze(const std::vector<std::string>& lines)
 {
